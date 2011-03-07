@@ -1,0 +1,5 @@
+Manifest-Version: 1.0
+Created-By: (Slash)
+Main-Class: net.slashware.eid.RunGame
+Class-Path: lib/jcurses-x.jar lib/libjcsi.jar lib/serf.jar lib/basicPlayer/basicplayer3.0.jar lib/basicPlayer/commons-logging-api.jar lib/basicPlayer/jl1.0.jar lib/basicPlayer/jogg-0.0.7.jar lib/basicPlayer/jorbis-0.0.15.jar lib/basicPlayer/jspeex0.9.7.jar lib/basicPlayer/mp3spi1.9.4.jar lib/basicPlayer/tritonus_share.jar lib/basicPlayer/vorbisspi1.0.2.jar 
+
