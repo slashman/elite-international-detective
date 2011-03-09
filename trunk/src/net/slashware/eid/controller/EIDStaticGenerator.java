@@ -5,8 +5,8 @@ import net.slashie.serf.levelGeneration.StaticGenerator;
 import net.slashie.utils.Position;
 import net.slashware.eid.data.ItemFactory;
 import net.slashware.eid.data.NPCFactory;
-import net.slashware.eid.entity.EIDItem;
 import net.slashware.eid.entity.NPC;
+import net.slashware.eid.entity.item.EIDItem;
 
 public class EIDStaticGenerator extends StaticGenerator{
 	@Override
