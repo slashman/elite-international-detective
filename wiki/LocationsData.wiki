@@ -1,0 +1,85 @@
+#summary Source data for the locations to be used in game
+#labels Featured,Phase-Design
+
+{{{
+"locationData": [
+{
+	"id": "US",
+	"longName": "The United States of America",
+	"shortName": "United States",
+	"adjective": "american",
+	"flagClues": [
+		"stars over blue",
+		"red stripes",
+		"white stripes"
+	],
+	"insigniaClues": [
+		"bald eagle with its wings displayed",
+		"13 arrows",
+		"olive branch",
+		"E pluribus unum",
+		"blue chief, red and white stripes"
+	],
+	"cities" : [
+	      {
+	         "id": "SF-US",
+	         "countryId": "US",
+	         "name": "San Francisco",
+	         "lat": "37°46'45.48N",
+	         "long": "122°25'9.12W",
+	         "history": "In 1776, the Spanish established a fort at the Golden Gate and a mission named for Francis of Assisi 
+on the site.The California Gold Rush in 1848 propelled the city 
+into a period of rapid growth, increasing the population in one 
+year from 1,000 to 25,000",
+	         "description": "San Francisco is a popular international tourist destination, renowned 
+for its chilly summer fog, steep rolling hills, eclectic mix 
+of Victorian and modern architecture and its famous landmarks, 
+including the Golden Gate Bridge, cable cars, and Chinatown."
+	         "insigniaClues": [
+	         	"the paris of the west",
+	         	"gold in peace, iron in war",
+	         	"the city by the bay",
+	         	"the fog city"
+	         ],
+	         "landMarks": [
+	         	{
+	         	    "name": "The Golden Gate Bridge",
+	         	    "footnote", "one of the most heavily used bridges in the world"
+	         	}
+	         ]
+	      },
+   	]
+},
+{
+	"id": "IC",
+	"longName": "Republic of Iceland",
+	"shortName": "Iceland",
+	"adjective": "icelander",
+	"cities" : [
+	      {
+	         "id": "SF-US",
+	         "countryId": "US",
+	         "name": "Reykjavík",
+	         "history": "Reykjavík is believed to be the location of the first permanent settlement in Iceland, 
+which Ingólfur Arnarson is said to have established around 870. 
+Until the 18th century, there was no urban development  in the 
+city location. The city was founded in 1786 as an official trading 
+town and grew steadily over the next decades, as it transformed 
+into a regional and later national centre of commerce, population 
+and governmental activities.",
+	         "description": "Reykjavík is often dubbed \"the nightlife capital of the north\". It is famous for its 
+nightlife during the weekends. Icelanders tend to go out 
+late so bars that look rather quiet can fill up suddenly 
+usually after midnight on a weekend.."
+	      },
+   	]	
+},
+{
+	"id": "UK",
+	"longName": "The United Kingdom of Great Britain and Northern Ireland",
+	"shortName": "United Kingdom",
+	"adjective": "british"
+},
+]
+
+}}}
