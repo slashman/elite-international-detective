@@ -29,14 +29,8 @@
 	         "name": "San Francisco",
 	         "lat": "37°46'45.48N",
 	         "long": "122°25'9.12W",
-	         "history": "In 1776, the Spanish established a fort at the Golden Gate and a mission named for Francis of Assisi 
-on the site.The California Gold Rush in 1848 propelled the city 
-into a period of rapid growth, increasing the population in one 
-year from 1,000 to 25,000",
-	         "description": "San Francisco is a popular international tourist destination, renowned 
-for its chilly summer fog, steep rolling hills, eclectic mix 
-of Victorian and modern architecture and its famous landmarks, 
-including the Golden Gate Bridge, cable cars, and Chinatown."
+	         "history": "In 1776, the Spanish established a fort at the Golden Gate and a mission named for Francis of Assisi on the site. The California Gold Rush in 1848 propelled the city into a period of rapid growth, increasing the population in one year from 1,000 to 25,000",
+	         "description": "San Francisco is a popular international tourist destination, renowned for its chilly summer fog, steep rolling hills, eclectic mix of Victorian and modern architecture and its famous landmarks, including the Golden Gate Bridge, cable cars, and Chinatown."
 	         "insigniaClues": [
 	         	"the paris of the west",
 	         	"gold in peace, iron in war",
@@ -50,6 +44,26 @@ including the Golden Gate Bridge, cable cars, and Chinatown."
 	         	}
 	         ]
 	      },
+             {
+             "id": "NY-US",
+             "countryId": "US",
+             "name": "New York City",
+             "lat": "40°43'N",
+             "long": "74°0'W",
+             "history": "Settled in 1524 and then again in 1614, it wasn't until 1664 that the city was surrendered to the English and finally became known as 'New York'.  In 2001 the World Trade Center in New York was destroyed by a terrorist attack, leading to the deaths of nearly 3000 people.",
+             "description": "New York City is the most populous city in the United States, and the most linguistically diverse city in the world.  It's also a hub for international business and commerce."
+             ],
+             "landMarks": [
+                 {
+                     "name": "Empire State Building",
+                     "footnote", "the tallest building in the world for over 40 years."
+                 },
+                 {
+                     "name": "Statue of Liberty",
+                     "footnote", "a symbol of freedom to the people of the United States."
+                 }
+             ]
+          },
    	]
 },
 {
@@ -62,17 +76,8 @@ including the Golden Gate Bridge, cable cars, and Chinatown."
 	         "id": "SF-US",
 	         "countryId": "US",
 	         "name": "Reykjavík",
-	         "history": "Reykjavík is believed to be the location of the first permanent settlement in Iceland, 
-which Ingólfur Arnarson is said to have established around 870. 
-Until the 18th century, there was no urban development  in the 
-city location. The city was founded in 1786 as an official trading 
-town and grew steadily over the next decades, as it transformed 
-into a regional and later national centre of commerce, population 
-and governmental activities.",
-	         "description": "Reykjavík is often dubbed \"the nightlife capital of the north\". It is famous for its 
-nightlife during the weekends. Icelanders tend to go out 
-late so bars that look rather quiet can fill up suddenly 
-usually after midnight on a weekend.."
+	         "history": "Reykjavík is believed to be the location of the first permanent settlement in Iceland, which Ingólfur Arnarson is said to have established around 870. Until the 18th century, there was no urban development  in the city location. The city was founded in 1786 as an official trading town and grew steadily over the next decades, as it transformed into a regional and later national centre of commerce, population and governmental activities.",
+	         "description": "Reykjavík is often dubbed \"the nightlife capital of the north\". It is famous for its nightlife during the weekends. Icelanders tend to go out late so bars that look rather quiet can fill up suddenly usually after midnight on a weekend.."
 	      },
    	]	
 },
@@ -80,7 +85,36 @@ usually after midnight on a weekend.."
 	"id": "UK",
 	"longName": "The United Kingdom of Great Britain and Northern Ireland",
 	"shortName": "United Kingdom",
-	"adjective": "british"
+	"adjective": "british",
+        "flagClues": [
+            "Union Jack",
+        ],
+"cities" : [
+          {
+             "id": "LN-UK",
+             "countryId": "UK",
+             "name": "London",
+             "lat": "51°30'26N",
+             "long": "0°7'39W",
+             "history": "Founded by the Romans, London grew in size and population to become a world leading city in the 19th century.  Despite a history of plague, fire, war and terrorism it remains so today."
+             "description": London is the largest city in the UK, and a major financial centre.  It's also home to a variety of tourist destinations including Buckingham Palace, Tower Bridge, and a number of national museums."
+             "landMarks": [
+                 {
+                     "name": "Buckingham Palace",
+                     "footnote", "Home of Queen Elizabeth II."
+                 },
+                 {
+                     "name": "The London Eye",
+                     "footnote", "Popular tourist attraction."
+                 }
+                 {
+                     "name": "Tower Bridge",
+                     "footnote", "Suspension bridge over the River Thames."
+                 }
+             ]
+          },
+       ]
+
 },
 ]
 
