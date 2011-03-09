@@ -1,6 +1,8 @@
 #summary Source data for the locations to be used in game
 #labels Featured,Phase-Design
 
+*If you want to contribute, just contact me! and I'll add you as a contributor!*
+
 {{{
 "locationData": [
 {
