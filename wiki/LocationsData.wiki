@@ -97,19 +97,19 @@
              "lat": "51°30'26N",
              "long": "0°7'39W",
              "history": "Founded by the Romans, London grew in size and population to become a world leading city in the 19th century.  Despite a history of plague, fire, war and terrorism it remains so today."
-             "description": London is the largest city in the UK, and a major financial centre.  It's also home to a variety of tourist destinations including Buckingham Palace, Tower Bridge, and a number of national museums."
+             "description": "London is the largest city in the UK, and a major financial centre.  It's also home to a variety of tourist destinations including Buckingham Palace, Tower Bridge, and a number of national museums."
              "landMarks": [
                  {
                      "name": "Buckingham Palace",
-                     "footnote", "Home of Queen Elizabeth II."
+                     "footnote", "home of Queen Elizabeth II."
                  },
                  {
                      "name": "The London Eye",
-                     "footnote", "Popular tourist attraction."
+                     "footnote", "a popular tourist attraction."
                  }
                  {
                      "name": "Tower Bridge",
-                     "footnote", "Suspension bridge over the River Thames."
+                     "footnote", "a famous suspension bridge over the River Thames."
                  }
              ]
           },
