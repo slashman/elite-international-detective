@@ -2,6 +2,7 @@ package net.slashware.eid.ui.console;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.List;
 import java.util.Vector;
 
 import net.slashie.libjcsi.CSIColor;
@@ -12,15 +13,21 @@ import net.slashie.libjcsi.textcomponents.MenuItem;
 import net.slashie.libjcsi.textcomponents.TextBox;
 import net.slashie.serf.action.Action;
 import net.slashie.serf.action.Actor;
+import net.slashie.serf.game.Equipment;
 import net.slashie.serf.sound.STMusicManagerNew;
 import net.slashie.serf.ui.UserCommand;
+import net.slashie.serf.ui.consoleUI.CharAppearance;
 import net.slashie.serf.ui.consoleUI.ConsoleUserInterface;
 import net.slashie.utils.Position;
 import net.slashware.eid.EIDGame;
 import net.slashware.eid.EIDUserInterface;
 import net.slashware.eid.data.PlayerFactory;
-import net.slashware.eid.entity.DetectiveActor;
-import net.slashware.eid.entity.EIDLevel;
+import net.slashware.eid.entity.item.EIDItem;
+import net.slashware.eid.entity.item.ItemType;
+import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.mission.Mission;
+import net.slashware.eid.entity.player.DetectiveActor;
+import net.slashware.eid.ui.CommonUI;
 import net.slashware.eid.ui.EIDDisplay;
 
 
@@ -30,6 +37,9 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 	public EIDConsoleUI (ConsoleSystemInterface csi){
 		this.csi = csi;
 		consoleDisplay = new EIDConsoleDisplay(csi);
+		POSITION_PICKER_COLOR = ConsoleSystemInterface.DARK_RED;
+		POSITION_PICKER_TEXT_COLOR = ConsoleSystemInterface.WHITE;
+		POSITION_PICKER_TIP_COLOR = ConsoleSystemInterface.RED;
 	}
 	
 	public void init(ConsoleSystemInterface psi, UserCommand[] gameCommands, Action target){
@@ -40,7 +50,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		xrange = 9;
 		yrange = 9;
 		messageBox.setPosition(49,14);
-		messageBox.setWidth(30);
+		messageBox.setWidth(29);
 		messageBox.setHeight(10);
 		messageBox.setForeColor(ConsoleSystemInterface.WHITE);
 		
@@ -61,6 +71,21 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		Calendar gameTime = ((EIDGame)player.getGame()).getGameTime(); 
 		csi.print(49, 3, gameTime.get(Calendar.YEAR)+", " +months[gameTime.get(Calendar.MONTH)] +" "+ gameTime.get(Calendar.DATE));
 		csi.print(49, 2, detective.getDescription());
+		csi.print(49, 4, (detective.getWeapon()!= null? detective.getWeapon().getDescription():"No Weapon"));
+		csi.print(49, 5, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
+		csi.print(49, 7, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
+		csi.print(49, 8, "Lethality: "+detective.getLethality().getDescription());
+		csi.print(49, 9, "Movement: "+detective.getWalkingMode().getDescription());
+		csi.print(49, 10,"Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
+	}
+	
+	@Override
+	public void drawAfterCells(Position runner, int x, int y) {
+		super.drawAfterCells(runner,x, y);
+		Integer blood = ((EIDLevel)getDetective().getLevel()).getBloodAt(runner);
+		if (blood != null){
+			csi.print(x, y, '.', CSIColor.RED);
+		}
 	}
 	
 	private void drawAddornment(){
@@ -226,19 +251,22 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		@Override
 		public DetectiveActor createDetective(EIDGame game) {
 			csi.cls();
-			csi.print(1,1, "Logging into InterSleuth operative servers...        [Ok]");
-			csi.print(1,2, "Detective at the keyboard, please identify yourself:");
-			csi.locateCaret(2, 4);
+			csi.print(3,1, "Logging into InterSleuth operative servers...");
+			csi.refresh();
+			csi.waitKey(CharKey.SPACE);
+			csi.print(60,1, "[Ok]", ConsoleSystemInterface.LEMON);
+			csi.print(3,2, "Detective at the keyboard, please identify yourself:");
+			csi.locateCaret(5, 4);
 			csi.refresh();
 			String name = csi.input(15);
-			csi.print(1,6, "There's no record of your name in the InterSleuth Network. ");
-			csi.print(1,7, "Are you new here? (Y/N)");
+			csi.print(3,6, "There's no record of your name in the InterSleuth Network. ");
+			csi.print(3,7, "Are you new here? (Y/N)");
 			csi.refresh();
 			CharKey key = csi.inkey();
 			
-			csi.print(1,9, "You have been identified as \""+name+"\".");
-			csi.print(1,10, "Your current rank is Rookie.");
-			csi.print(1,11, "Press space to continue.");
+			csi.print(3,9, "You have been identified as \""+name+"\".");
+			csi.print(3,10, "Your current rank is Rookie.");
+			csi.print(3,11, "Press space to continue.");
 			csi.refresh();
 			csi.waitKey(CharKey.SPACE);
 			return PlayerFactory.generateDetective(name, PlayerFactory.Sex.MALE, game);
@@ -250,22 +278,14 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		}
 
 		@Override
-		public void showMission(DetectiveActor detective) {
+		public void showMission(DetectiveActor detective, Mission mission) {
+			String missionDescription = CommonUI.composeMissionDescription(detective, mission);
+			missionDescription += " XXX XXX Press Space to Continue";
 			csi.cls();
-			csi.print(1,1, "*** FLASH! ***");
-			csi.print(1,3, "British Senate Representative McGregor has been murdered at");
-			csi.print(1,4, "his mansion on Vancouver, Canada.");
-			csi.print(1,6, "Terrorist organization Black Knights has taken responsability");
-			csi.print(1,7, "for the event.");
-			csi.print(1,9, "A female suspect was spotted at the crime scene.");
-			csi.print(1,11, "Your assignment: Travel to Canada, track the murderer to his");
-			csi.print(1,12, "hideout and neutralize him.");
-			csi.print(1,14, "You have been given license to kill, you must complete your");
-			csi.print(1,15, "mission by Sunday, 5 PM");
-			csi.print(1,17, "Good Luck, "+detective.getDescription());
-			csi.print(1,18, "Press space to continue.");
+			csi.print(3,1, "*** FLASH! ***", ConsoleSystemInterface.RED);
 			csi.refresh();
-			csi.waitKey(CharKey.SPACE);
+			
+			showTextBox(missionDescription, 3, 3, 75, 19, CSIColor.BLACK);
 
 		}
 
@@ -277,12 +297,31 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		@Override
 		public int showTitleScreen() {
 			csi.cls();
-			csi.print(18, 4, "Elite International Detective", ConsoleSystemInterface.RED);
-			csi.print(20,12, "a. Login", ConsoleSystemInterface.WHITE);
-			csi.print(20,13, "b. Load", ConsoleSystemInterface.WHITE);
-			csi.print(20,14, "c. Exit", ConsoleSystemInterface.WHITE);
 			
-			csi.print(8,17, "Version "+EIDGame.getVersion()+", Developed by Slashware Interactive 2011", ConsoleSystemInterface.RED);
+			csi.print(38, 4, "            /^\\/^\\", ConsoleSystemInterface.DARK_RED);
+			csi.print(38, 5, "            \\----|", ConsoleSystemInterface.DARK_RED);
+			csi.print(38, 6, "        _---'---~~~~-_", ConsoleSystemInterface.DARK_RED);
+			csi.print(38, 7, "         ~~~|~~L~|~~~~", ConsoleSystemInterface.DARK_RED);
+			csi.print(38, 8, "            (/_  /~~--", ConsoleSystemInterface.DARK_RED);
+			csi.print(38, 9, "          \\~ \\  /  /~", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,10, "        __~\\  ~ /   ~~----,", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,11, "        \\    | |       /  \\", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,12, "        /|   |/       |    |", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,13, "        | | | o  o     /~   |", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,14, "      _-~_  |        ||  \\  /", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,15, "     (// )) | o  o    \\\\---'", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,16, "     //_- |  |          \\", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,17, "    //   |____|\\______\\__\\", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,18, "    ~      |   / |    |", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,19, "            |_ /   \\ _|", ConsoleSystemInterface.DARK_RED);
+			csi.print(38,20, "          /~___|  /____\\", ConsoleSystemInterface.DARK_RED); 
+			
+			csi.print(8, 4, "Elite International Detective", ConsoleSystemInterface.RED);
+			csi.print(10, 6, "a. Login into InterSleuth Servers", ConsoleSystemInterface.WHITE);
+			csi.print(10, 7, "b. Resume Journey", ConsoleSystemInterface.WHITE);
+			csi.print(10, 8, "c. Exit", ConsoleSystemInterface.WHITE);
+			
+			csi.print(8,19, "Version "+EIDGame.getVersion()+", Developed by Slashware Interactive 2011", ConsoleSystemInterface.RED);
 			csi.refresh();
 	    	STMusicManagerNew.thus.playKey("TITLE");
 	    	CharKey x = new CharKey(CharKey.NONE);
@@ -296,6 +335,8 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 				return 0;
 			case CharKey.B: case CharKey.b:
 				return 1;
+			case CharKey.C: case CharKey.c:
+				return 2;				
 			}
 			return 0;
 		}
@@ -313,6 +354,107 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 
 	@Override
 	public void showInventory() {
-		
+		Equipment.eqMode = true;
+		int xpos = 8, ypos = 3;
+  		MenuBox menuBox = new MenuBox(csi);
+  		menuBox.setHeight(17);
+  		menuBox.setWidth(71);
+  		menuBox.setPosition(8,7);
+  		menuBox.setBorder(true);
+  		TextBox itemDescription = new TextBox(csi);
+  		itemDescription.setBounds(52,9,25,5);
+  		csi.saveBuffer();
+  		csi.print(xpos,24,  "[Space] to continue, Up and Down to browse");
+  		int choice = 0;
+  		while (true){
+  			csi.print(xpos,ypos+2,  "  __________     __________     _________      __________ ", ConsoleSystemInterface.WHITE);
+  			csi.print(xpos,ypos+3,  " / Weapons  \\   / Clothing \\   / Gadgets  \\   / Misc     \\", ConsoleSystemInterface.WHITE);
+  	  		List<Equipment> inventory = null;
+  	  		switch (choice){
+  	  		case 0:
+  	  			inventory = getDetective().getInventory(ItemType.WEAPON);
+  	  			break;
+  	  		case 1:
+  	  		inventory = getDetective().getInventory(ItemType.CLOTHING);
+  	  			break;
+  	  		case 2:
+  	  		inventory = getDetective().getInventory(ItemType.GADGET);
+  	  			break;
+  	  		case 3:
+  	  		inventory = getDetective().getInventory(ItemType.MISC);
+  	  			break;
+  	  		}
+  	  		
+  	  		Vector menuItems = new Vector();
+  	  		for (Equipment item: inventory){
+  	  			menuItems.add(new InventoryItem(item, getDetective()));
+  	  		}
+  	  		
+  	  		menuBox.setMenuItems(menuItems);
+  	  		menuBox.draw();
+  	  		csi.print(xpos+choice*15, ypos+4, "/            \\", ConsoleSystemInterface.WHITE);
+  	  		csi.refresh();
+  	  		
+	  		CharKey x = new CharKey(CharKey.NONE);
+			while (x.code != CharKey.SPACE && !x.isArrow())
+				x = csi.inkey();
+			if (x.code == CharKey.SPACE || x.code == CharKey.ESC){
+				break;
+			}
+			if (x.isLeftArrow()){
+				choice--;
+				if (choice == -1)
+					choice = 0;
+			}
+			if (x.isRightArrow()){
+				choice++;
+				if (choice == 4)
+					choice = 3;
+			}
+  		}
+		csi.restore();
+		csi.refresh();
+
 	}
+	
+	private class InventoryItem implements MenuItem{
+		private Equipment item;
+		private DetectiveActor detective;
+
+		public InventoryItem(Equipment item, DetectiveActor detective) {
+			this.item = item;
+			this.detective = detective;
+		}
+		
+		public Equipment getEquipment(){
+			return item;
+		}
+
+		public char getMenuChar() {
+			return ((CharAppearance)item.getItem().getAppearance()).getChar();
+		}
+		
+		public int getMenuColor() {
+			return ((CharAppearance)item.getItem().getAppearance()).getColor();
+		}
+		
+		public String getMenuDescription() {
+			String itemDescription = item.getItem().getDescription();
+			int quantity = item.getQuantity();
+			EIDItem eitem = (EIDItem)item.getItem();
+			switch (eitem.getItemType()){
+			case WEAPON:
+				return quantity + " " + itemDescription + " Damage "+ eitem.getAttack().getString()+" Range "+ eitem.getRange()+" Spread " + eitem.getSpread();
+			case CLOTHING:
+				return quantity + " " + itemDescription + " Armor "+ eitem.getArmor().getString()+" Coolness "+ eitem.getCoolness() +" Disguise "+eitem.getDisguise();
+			case GADGET:
+				return quantity + " " + itemDescription;
+			case MISC:
+				return quantity + " " + itemDescription;
+			}
+			return "N/A";
+		}
+	}
+  		
+  		
 }

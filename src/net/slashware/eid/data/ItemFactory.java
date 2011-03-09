@@ -2,7 +2,7 @@ package net.slashware.eid.data;
 
 import java.util.Hashtable;
 
-import net.slashware.eid.entity.EIDItem;
+import net.slashware.eid.entity.item.EIDItem;
 
 public class ItemFactory {
 	private static Hashtable<String, EIDItem> definitions = new Hashtable<String, EIDItem>();

@@ -5,8 +5,8 @@ import net.slashie.serf.action.Actor;
 import net.slashie.serf.action.AwareActor;
 import net.slashie.serf.ui.ActionCancelException;
 import net.slashie.utils.Position;
-import net.slashware.eid.entity.DetectiveActor;
-import net.slashware.eid.entity.SimpleLevelCell;
+import net.slashware.eid.entity.level.SimpleLevelCell;
+import net.slashware.eid.entity.player.DetectiveActor;
 
 public class Walk extends Action{
 	/**
@@ -44,8 +44,16 @@ public class Walk extends Action{
 	public void execute() {
 		actionCancelled = false;
 		
+		if (performer instanceof DetectiveActor){
+			if (((DetectiveActor) performer).getStamina() == 0){
+				youMessage("You hold your breath!");
+				((DetectiveActor) performer).recoverStamina();
+				return;
+			}
+		}
+		
 		if (targetDirection == Action.SELF){
-			youMessage("You stand alert.");
+			((DetectiveActor) performer).recoverStamina();
 			return;
 		}
 		
@@ -63,11 +71,16 @@ public class Walk extends Action{
 			}
 		}
 		
+		if (performer instanceof DetectiveActor)
+			((DetectiveActor) performer).useStamina();
+		
 	    try {
 	    	((AwareActor)performer).landOn(destinationPoint);
 		} catch (ActionCancelException e) {
 			actionCancelled = true;
 		}
+		
+		
 	}
 	
 
@@ -86,10 +99,6 @@ public class Walk extends Action{
 		if (performer instanceof DetectiveActor){
 			return( (DetectiveActor) performer).getWalkCost();
 		} else
-			return 50;
-		
+			return 80;
 	}
-	
-	
-
 }

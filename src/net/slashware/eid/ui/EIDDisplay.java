@@ -3,7 +3,8 @@ package net.slashware.eid.ui;
 import java.io.File;
 
 import net.slashware.eid.EIDGame;
-import net.slashware.eid.entity.DetectiveActor;
+import net.slashware.eid.entity.mission.Mission;
+import net.slashware.eid.entity.player.DetectiveActor;
 
 public abstract class EIDDisplay  {
 	public static EIDDisplay thus;
@@ -20,10 +21,10 @@ public abstract class EIDDisplay  {
 	 */
 	public abstract int showSavedGames(File[] saves);
 	
-	public abstract void showMission(DetectiveActor detective);
-	
 	public abstract void showHelp();
 	
 	public abstract DetectiveActor createDetective(EIDGame game);
+
+	public abstract void showMission(DetectiveActor detective, Mission mision);
 
 }

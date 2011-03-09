@@ -40,11 +40,18 @@ import net.slashie.serf.ui.oryxUI.GFXUserInterface;
 import net.slashie.serf.ui.oryxUI.SwingSystemInterface;
 import net.slashie.serf.ui.oryxUI.effects.GFXEffectFactory;
 import net.slashie.utils.sound.midi.STMidiPlayer;
+import net.slashware.eid.action.ChangeLethality;
+import net.slashware.eid.action.Fire;
+import net.slashware.eid.action.Grab;
+import net.slashware.eid.action.Run;
+import net.slashware.eid.action.Use;
 import net.slashware.eid.action.Walk;
 import net.slashware.eid.controller.GameFiles;
+import net.slashware.eid.controller.LocationManager;
 import net.slashware.eid.data.EIDData;
 import net.slashware.eid.data.ItemFactory;
 import net.slashware.eid.data.NPCFactory;
+import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.ui.EIDDisplay;
 import net.slashware.eid.ui.console.CharAppearances;
 import net.slashware.eid.ui.console.CharEffects;
@@ -91,6 +98,7 @@ public class RunGame {
 				initializeItems();
 				initializeCells();
 				initializeNPCS();
+				initializeLocations();
 				initializeFeatures();
 				switch (mode){
 				case SWING_GFX:
@@ -185,6 +193,13 @@ public class RunGame {
 			createNew = false;
     	}
 	}
+	private static void initializeLocations() {
+		Location[] locations = EIDData.getLocations();
+		for (Location location: locations){
+			LocationManager.addLocation(location);
+		}
+	}
+	
 	private static Properties configuration;
 	private static Properties UIconfiguration;
 	private static Properties keyConfig;
@@ -280,6 +295,11 @@ public class RunGame {
 	private static void initializeUI(Object si){
 		Action walkAction = new Walk();
 		Action meleeAction = new Walk(); //TODO
+		Action grabAction = new Grab();
+		Action useAction = new Use();
+		Action fireAction = new Fire();
+		Action changeLethality = new ChangeLethality();
+		Action runAction = new Run();
 
 		keyBindings = new Properties();
 		keyBindings.put("DONOTHING1_KEY", readKeyString(keyConfig, "doNothing"));
@@ -303,8 +323,6 @@ public class RunGame {
 		keyBindings.put("SELF1_KEY", readKeyString(keyConfig, "self"));
 		keyBindings.put("SELF2_KEY", readKeyString(keyConfig, "self2"));
 		
-		// keyBindings.put("DROP_EQUIPMENT_KEY", readKeyString(keyConfig, "drop"));
-		
 		keyBindings.put("QUIT_KEY", readKeyString(keyConfig, "PROMPTQUIT"));
 		keyBindings.put("HELP1_KEY", readKeyString(keyConfig, "HELP1"));
 		keyBindings.put("HELP2_KEY", readKeyString(keyConfig, "HELP2"));
@@ -314,7 +332,12 @@ public class RunGame {
 		keyBindings.put("SWITCH_MUSIC_KEY", readKeyString(keyConfig, "SWITCHMUSIC"));
 		
 		UserAction[] userActions = new UserAction[] {
-				// new UserAction(dropEquipment, i(keyBindings.getProperty("DROP_EQUIPMENT_KEY"))),
+			new UserAction(grabAction, i(readKeyString(keyConfig, "grab"))),
+			new UserAction(useAction, i(readKeyString(keyConfig, "use"))),
+			new UserAction(fireAction, i(readKeyString(keyConfig, "fire"))),
+			new UserAction(changeLethality, i(readKeyString(keyConfig, "changeLethality"))),
+			new UserAction(runAction, i(readKeyString(keyConfig, "run"))),
+
 		};
 		
 		UserCommand[] userCommands = new UserCommand[]{
@@ -337,7 +360,7 @@ public class RunGame {
 		case JCURSES_CONSOLE: case SWING_CONSOLE:
 			((EIDConsoleUI)ui).init((ConsoleSystemInterface)si, userCommands, null);
 			uiSelector = new EIDConsoleUISelector();
-			((ConsoleUISelector)uiSelector).init((ConsoleSystemInterface)si, userActions, walkAction, null, meleeAction, (ConsoleUserInterface)ui, keyBindings);
+			((ConsoleUISelector)uiSelector).init((ConsoleSystemInterface)si, userActions, walkAction, fireAction, meleeAction, (ConsoleUserInterface)ui, keyBindings);
 			break;
 		}
 	}
@@ -419,6 +442,7 @@ public class RunGame {
 	private static void initializeActions(){
 		ActionFactory af = ActionFactory.getActionFactory();
 		Action[] definitions = new Action[]{
+				new Fire()
 		};
 		for (int i = 0; i < definitions.length; i++)
 			af.addDefinition(definitions[i]);

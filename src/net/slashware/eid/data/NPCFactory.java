@@ -12,7 +12,9 @@ public class NPCFactory {
 	private static List<NPC> npcsList = new ArrayList<NPC>();
 	
 	public static NPC createNPC(String id){
-		return (NPC)npcsMap.get(id).clone();
+		NPC ret = (NPC)npcsMap.get(id).clone();
+		ret.arm();
+		return ret;
 	}
 	
 

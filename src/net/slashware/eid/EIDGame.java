@@ -8,9 +8,11 @@ import net.slashie.serf.game.SworeGame;
 import net.slashie.serf.level.AbstractLevel;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.serf.sound.STMusicManagerNew;
-import net.slashie.simpleRL.domain.world.Level;
+import net.slashie.serf.ui.UserInterface;
 import net.slashware.eid.controller.LevelMaster;
-import net.slashware.eid.entity.DetectiveActor;
+import net.slashware.eid.controller.mission.MissionGenerator;
+import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.player.DetectiveActor;
 import net.slashware.eid.ui.EIDDisplay;
 
 public class EIDGame extends SworeGame{
@@ -42,9 +44,10 @@ public class EIDGame extends SworeGame{
 	@Override
 	public void onGameStart(int gameType) {
 		loadMetadata();
-		EIDDisplay.thus.showMission(getDetective());
-		loadLevel("HQ");
 		setGameTime(3,8,1922);
+		EIDDisplay.thus.showMission(getDetective(), MissionGenerator.generateMission(currentTime.getTime(), 1));
+		loadLevel("HQ");
+		
 	}
 
 	private Calendar currentTime;
@@ -74,8 +77,12 @@ public class EIDGame extends SworeGame{
 
 	@Override
 	public void onLevelLoad(AbstractLevel aLevel) {
-		Level level = (Level)aLevel;
+		EIDLevel level = (EIDLevel) aLevel;
 		if (level.getMusicKey() != null)
 			STMusicManagerNew.thus.playKey(level.getMusicKey());
+	}
+	
+	@Override
+	public void afterPlayerAction() {
 	}
 }
