@@ -1,8 +1,37 @@
 #summary Source data for the locations to be used in game
 #labels Featured,Phase-Design
 
-*If you want to contribute, just contact me! and I'll add you as a contributor!*
+*Note: If you want to contribute, just contact me! and I'll add you as a contributor!*
 
+= Scheme description =
+  * Cities are grouped in countries, each one with these attributes
+   * id: An unique country identifier, uppercade two char ISO is preferred
+   * longName: Long official name of the country
+   * shortName: Commonly used name
+   * adjective: How is people from this country called
+   * flagClues: List of clues for the flag of the country, they are used inside the game as information to guess the next destination
+   * insigniaClues: List of clues for insignias of the country (coat of arms, seal, motto, etc), they are used inside the game as information to guess the next destination
+   * cities: A list of cities, see description below
+  * Cities are an attribute of the countries and have the following attributes
+   * id: UN/LOCODE city identifier http://www.unece.org/cefact/locode/service/location.htm
+   * name: Name of the country
+   * lat: latitude, examples: "37°46'45.48N", "37°46'45N"
+   * long: longitude, examples: "122°25'9.12W", "122°25'9W"
+   * history: Textual description of the country history, it's shown as info when traveling between locations.
+   * description: San Francisco is a popular international tourist destination, renowned for its chilly summer fog, steep rolling hills, eclectic mix of Victorian and modern architecture and its famous landmarks, including the Golden Gate Bridge, cable cars, and Chinatown.
+  * insigniaClues: List of clues for insignias of the city (nicknames, motto, landmark nicknames, etc), they are used inside the game as information to guess the next destination
+  * landMarks: List of landmarks of the city, each one with a name and a foot note for the landmark (for example name: "Statue of Liberty", footnote: "a symbol of freedom to the people of the United States."
+
+= Current Cities =
+  * Iceland - Slashie
+   * Reykjavík - Slashie
+  * United Kingdom - Slashie
+   * London - Geoffrey White
+  * United States - Slashie
+   * San Francisco - Slashie
+   * New York - Geoffrey White
+
+= JSON Location Data =
 {{{
 "locationData": [
 {
@@ -25,7 +54,6 @@
 	"cities" : [
 	      {
 	         "id": "SF-US",
-	         "countryId": "US",
 	         "name": "San Francisco",
 	         "lat": "37°46'45.48N",
 	         "long": "122°25'9.12W",
@@ -46,7 +74,6 @@
 	      },
              {
              "id": "NY-US",
-             "countryId": "US",
              "name": "New York City",
              "lat": "40°43'N",
              "long": "74°0'W",
@@ -92,7 +119,6 @@
 "cities" : [
           {
              "id": "LN-UK",
-             "countryId": "UK",
              "name": "London",
              "lat": "51°30'26N",
              "long": "0°7'39W",
