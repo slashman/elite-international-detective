@@ -1,6 +1,8 @@
 package net.slashware.eid.data;
 
+import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.serf.level.AbstractCell;
+import net.slashie.serf.ui.consoleUI.CharAppearance;
 import net.slashie.utils.roll.Roll;
 import net.slashware.eid.entity.NPC;
 import net.slashware.eid.entity.item.Clothing;
@@ -15,7 +17,13 @@ public class EIDData {
 	public static AbstractCell[] getCellDefinitions (){
 		return new AbstractCell[]{
 			new SimpleLevelCell("FLOOR", "Floor", false, false),
-			new SimpleLevelCell("WALL", "Wall", true, true)
+			new SimpleLevelCell("WALL", "Wall", true, true),
+			new SimpleLevelCell("BLUE_WALL", "Wall", true, true),
+			new SimpleLevelCell("BAND", "Band", true, false),
+			new SimpleLevelCell("V_GLASS", "Glass Panel", true, false),
+			new SimpleLevelCell("H_GLASS", "Glass Panel", true, false),
+			new SimpleLevelCell("DESK", "Desk", true, false),
+			new SimpleLevelCell("DOOR", "Door", false, true)
 		};
 	}
 	
@@ -28,6 +36,7 @@ public class EIDData {
 			new Clothing("BLACK_RAINCOAT", "Black Raincoat",  new Roll(1,1), 3, 1),
 			new Clothing("DARK_BLUE_SUIT", "Dark Blue Suit",  new Roll(1,1), 2, 3),
 			new Clothing("DARK_BLACK_SUIT", "Dark Black Suit",  new Roll(1,1), 2, 3),
+			new Clothing("RED_DRESS", "Red Dress",  new Roll(1,1), 2, 3),
 			new Gadget("REMOTE_COM", "Remote Communication Device")
 		};
 		
@@ -35,8 +44,12 @@ public class EIDData {
 
 	public static NPC[] getNPCs() {
 		return new NPC[]{
-			new NPC("JEFF","Boss Jeff",true,true,"THOMPSON_M1921","DARK_BLACK_SUIT",80,"Remember, we are working on the honor basis", "This gun is my welcome gift. Good luck!", "Kill only as a last resource"),
-			new NPC("AGENT","Detective",false,false,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"They have pulled another caper!", "Where's the coffee machine?", "Welcome to the agency, rookie", "I need some tickets...")
+			new NPC("JEFF","Boss Jeff",true,false,"THOMPSON_M1921","DARK_BLACK_SUIT",80,"Remember, we are working on the honor basis", "This gun is my welcome gift. Good luck!", "Kill only as a last resource"),
+			new NPC("LALI","Lali",true,false,null,"RED_DRESS",80,"Hello, sweetheart!"),
+			new NPC("AGENT","Detective",false,false,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"The bastards have pulled another caper!", "Where's the coffee machine?", "Welcome to the agency, rookie", "I need some tickets..."),
+			new NPC("AIRPORT_LADY","Airport Lady",false,false,null,null,5,"Good Day!"),
+			new NPC("AIRPORT_GUY","Gentleman",false,false,null,null,5,"Good Day!")
+			
 		};
 	}
 
@@ -51,7 +64,13 @@ public class EIDData {
 				new Landmark [] {
 					new Landmark("The Canada Place", "the main cruise ship terminal for the region")
 				}	
+			),
+			new Location("CO MDE", "Colombia", "Medellin", "San Francisco is the city of... etc", "colombian",
+					new Landmark [] {
+					new Landmark("The Coltejer Tower", "the tallest building of the region")
+				}	
 			)
+
 		};
 	}
 }

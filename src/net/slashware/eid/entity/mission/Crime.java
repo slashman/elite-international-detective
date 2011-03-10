@@ -1,9 +1,9 @@
 package net.slashware.eid.entity.mission;
 
-import net.slashie.utils.Util;
 import net.slashware.eid.entity.level.Location;
 
 public class Crime {
+	private String title;
 	private CrimeType crimeType;
 	private CrimeSubject subject;
 	private Criminal criminal;
@@ -18,6 +18,7 @@ public class Crime {
 		this.criminal = criminal;
 		this.location = location;
 		this.detailedLocation = detailedLocation;
+		this.title = "The "+crimeType.getCrimeTitle()+" of "+getSubject().getSimpleDescription();
 	}
 
 	public CrimeType getCrimeType() {
@@ -38,6 +39,10 @@ public class Crime {
 
 	public Location getLocation() {
 		return location;
+	}
+
+	public String getTitle() {
+		return title;
 	} 
 	
 	

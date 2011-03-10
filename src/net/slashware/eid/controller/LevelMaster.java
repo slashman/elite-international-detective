@@ -5,6 +5,7 @@ import net.slashie.serf.level.AbstractLevel;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.serf.levelGeneration.StaticPattern;
 import net.slashie.utils.Position;
+import net.slashware.eid.data.levels.Airport_Pattern;
 import net.slashware.eid.data.levels.HQ_Pattern;
 import net.slashware.eid.entity.level.EIDLevel;
 
@@ -26,6 +27,19 @@ public class LevelMaster {
 			}
 			ret.setMusicKey("HQ");
 			ret.setID("HQ");
+		}else if (levelID.equals("AIRPORT")){
+			ret = new EIDLevel();
+			
+			StaticPattern pattern = new Airport_Pattern();
+			EIDStaticGenerator generator = new EIDStaticGenerator();
+			pattern.setup(generator);
+			generator.createLevel(ret);
+			ret.setDescription(pattern.getDescription());
+			if (pattern.getUnleashers() != null){
+				ret.setUnleashers(pattern.getUnleashers());
+			}
+			ret.setMusicKey("AIRPORT");
+			ret.setID("AIRPORT");
 		}
 		
 		if (ret.getExitFor("_BACK") != null){

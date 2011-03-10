@@ -1,19 +1,23 @@
 package net.slashware.eid.entity.player;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
-import java.util.Map;
 
 import net.slashie.serf.baseDomain.AbstractItem;
 import net.slashie.serf.game.Equipment;
 import net.slashie.serf.game.Player;
 import net.slashie.serf.ui.UserInterface;
 import net.slashie.utils.Util;
+import net.slashware.eid.EIDGame;
+import net.slashware.eid.EIDUserInterface;
 import net.slashware.eid.entity.EIDActor;
 import net.slashware.eid.entity.item.Ammo;
 import net.slashware.eid.entity.item.EIDItem;
 import net.slashware.eid.entity.item.ItemType;
 import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.level.Location;
+import net.slashware.eid.entity.mission.Mission;
 
 public class DetectiveActor extends Player implements EIDActor {
 	public DetectiveActor() {
@@ -34,7 +38,30 @@ public class DetectiveActor extends Player implements EIDActor {
 	private int staminaMax;
 	private Lethality lethality;
 	private WalkingMode walkingMode;
+	private Location location;
+	private Mission currentMission;
 	
+	@Override
+	public void beforeActing() {
+		super.beforeActing();
+		if (getCurrentMission().getDeadline().before(getCurrentTime())){
+			// Mission failed
+			getLevel().addMessage("Mission Failed!");
+		}
+	}
+	
+	@Override
+	public void afterActing() {
+		super.afterActing();
+		int lastActionMillis = getCost() * 20;
+		((EIDGame)getGame()).elapseMillis(lastActionMillis);
+
+	}
+	
+	private Date getCurrentTime() {
+		return ((EIDGame)getGame()).getGameTime().getTime();
+	}
+
 	public int getLuckyPoints() {
 		return luckyPoints;
 	}
@@ -207,5 +234,36 @@ public class DetectiveActor extends Player implements EIDActor {
 		if (stamina > staminaMax)
 			stamina = staminaMax;
 	}
+
+	public boolean isOnHQ() {
+		return getLevel().getID().equals("HQ");
+	}
+
+	public Location getLocation() {
+		return location;
+	}
+	
+	public void setLocation(Location location) {
+		this.location = location;
+	}
+
+	public Mission getCurrentMission() {
+		return currentMission;
+	}
+
+	public void setCurrentMission(Mission currentMission) {
+		this.currentMission = currentMission;
+	}
+
+	public boolean isOnAirport() {
+		return getLevel().getID().equals("AIRPORT");
+	}
+
+	public void takeNap() {
+		((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("Sleep time.");
+		((EIDGame)getGame()).tilMorrow();
+	}
+	
+	
 	
 }

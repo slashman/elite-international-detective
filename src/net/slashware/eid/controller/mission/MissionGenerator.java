@@ -6,7 +6,6 @@ import java.util.Date;
 import net.slashie.serf.text.SimpleEnglishNameGenerator;
 import net.slashie.utils.Util;
 import net.slashware.eid.controller.LocationManager;
-import net.slashware.eid.entity.NPC;
 import net.slashware.eid.entity.level.Landmark;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.BuildingSubject;

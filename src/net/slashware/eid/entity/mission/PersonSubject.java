@@ -25,4 +25,9 @@ public class PersonSubject extends CrimeSubject {
 	public String getDetailedDescription(){
 		return getName()+", "+getBackground()+",";
 	}
+	
+	@Override
+	public String getSimpleDescription() {
+		return getName();
+	}
 }

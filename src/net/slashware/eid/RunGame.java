@@ -40,6 +40,7 @@ import net.slashie.serf.ui.oryxUI.GFXUserInterface;
 import net.slashie.serf.ui.oryxUI.SwingSystemInterface;
 import net.slashie.serf.ui.oryxUI.effects.GFXEffectFactory;
 import net.slashie.utils.sound.midi.STMidiPlayer;
+import net.slashware.eid.action.CallTransport;
 import net.slashware.eid.action.ChangeLethality;
 import net.slashware.eid.action.Fire;
 import net.slashware.eid.action.Grab;
@@ -300,6 +301,7 @@ public class RunGame {
 		Action fireAction = new Fire();
 		Action changeLethality = new ChangeLethality();
 		Action runAction = new Run();
+		Action moveAction = new CallTransport();
 
 		keyBindings = new Properties();
 		keyBindings.put("DONOTHING1_KEY", readKeyString(keyConfig, "doNothing"));
@@ -337,6 +339,7 @@ public class RunGame {
 			new UserAction(fireAction, i(readKeyString(keyConfig, "fire"))),
 			new UserAction(changeLethality, i(readKeyString(keyConfig, "changeLethality"))),
 			new UserAction(runAction, i(readKeyString(keyConfig, "run"))),
+			new UserAction(moveAction, i(readKeyString(keyConfig, "move"))),
 
 		};
 		

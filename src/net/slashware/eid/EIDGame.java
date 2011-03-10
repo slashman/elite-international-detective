@@ -8,10 +8,11 @@ import net.slashie.serf.game.SworeGame;
 import net.slashie.serf.level.AbstractLevel;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.serf.sound.STMusicManagerNew;
-import net.slashie.serf.ui.UserInterface;
 import net.slashware.eid.controller.LevelMaster;
+import net.slashware.eid.controller.LocationManager;
 import net.slashware.eid.controller.mission.MissionGenerator;
 import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 import net.slashware.eid.ui.EIDDisplay;
 
@@ -45,7 +46,10 @@ public class EIDGame extends SworeGame{
 	public void onGameStart(int gameType) {
 		loadMetadata();
 		setGameTime(3,8,1922);
-		EIDDisplay.thus.showMission(getDetective(), MissionGenerator.generateMission(currentTime.getTime(), 1));
+		Mission firstMission = MissionGenerator.generateMission(currentTime.getTime(), 1);
+		getDetective().setCurrentMission(firstMission);
+		getDetective().setLocation(LocationManager.getLocation("CO MDE"));
+		EIDDisplay.thus.showMission(getDetective(), firstMission);
 		loadLevel("HQ");
 		
 	}
@@ -61,6 +65,8 @@ public class EIDGame extends SworeGame{
 		currentTime.set(Calendar.YEAR, year);
 		currentTime.set(Calendar.MONTH, month-1);
 		currentTime.set(Calendar.DATE, day);
+		currentTime.set(Calendar.HOUR_OF_DAY, 17);
+		currentTime.set(Calendar.MINUTE, 0);
 	}
 	
 	public Calendar getGameTime(){
@@ -72,6 +78,8 @@ public class EIDGame extends SworeGame{
 		
 		md = new LevelMetaData("HQ");
 		addMetaData("HQ", md);
+		md = new LevelMetaData("AIRPORT");
+		addMetaData("AIRPORT", md);
 
 	}
 
@@ -84,5 +92,28 @@ public class EIDGame extends SworeGame{
 	
 	@Override
 	public void afterPlayerAction() {
+	}
+
+	
+	public void elapseHours(int hours) {
+		currentTime.add(Calendar.HOUR_OF_DAY, hours);
+		if (currentTime.get(Calendar.HOUR_OF_DAY) > 23){
+			// Next day!
+			getDetective().takeNap();
+		}
+	}
+
+	public void tilMorrow() {
+		currentTime.add(Calendar.DATE, 1);
+		currentTime.set(Calendar.HOUR_OF_DAY, 7);
+	}
+
+	public void elapseMillis(int millis) {
+		currentTime.add(Calendar.MILLISECOND, millis);
+		if (currentTime.get(Calendar.HOUR_OF_DAY) > 23){
+			// Next day!
+			getDetective().takeNap();
+		}
+		
 	}
 }
