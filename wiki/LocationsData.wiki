@@ -28,6 +28,7 @@
   * United Kingdom - Slashie
    * London - Geoffrey White
   * United States - Slashie
+   * Sacramento - EligZero
    * San Francisco - Slashie
    * New York - Geoffrey White
   * Russia - Geoffrey White
@@ -95,6 +96,25 @@
                  }
              ]
           },
+          {
+                "id": "SAC-US",
+                "name": "Sacramento",
+                "lat": "38°33'20N",
+                "long": "121°28'8W",
+                "history": "Southern Maidu Native Americans lived in the area for thousands of years before the Spanish explorer Gabriel Moraga named it Sacramento, famously saying 'Es como el sagrado sacramento!' (This is like the Holy Sacrament). In 1848 when gold was discovered at Sutter's Mill in Coloma, many people immigrated to Sacramento in search of gold that most would never find. These failed prospectors along with local farmers and trappers formed the City of Sacramento in 1849 at the intersection of the Sacramento and American rivers. In 1863, Sacramento became the final western destination of the US's first transcontinental railroad. By 1879, Sacramento was named the permanent state capital of California. At the time, it was home to only 21,420 people.",
+                "description": "Sacramento is the state capital of California. It sits at the intersection of the Sacramento and American rivers, and enjoys a Mediterranean climate in the Sacramento Valley filled with oak trees and tall yellow grass. Summers are regularly above 109 degrees Fahrenheit, but it almost never snows in the winter, preferring to rain heavily from October to January. It is home to the beautiful California state capital building, and has a famously boring nickname: the City of Trees. It is an accurate description."
+                "insigniaClues": [
+                       "the city of trees",
+                       "state capital of the golden state"
+                ],
+                "landMarks": [
+                       {
+                           "name": "The state capital of California",
+                           "footnote", "a beautiful stone building built in a neoclassical style"
+                       }
+                ]
+             }
+
    	]
 },
 {
