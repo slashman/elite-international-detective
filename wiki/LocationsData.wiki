@@ -30,6 +30,10 @@
   * United States - Slashie
    * San Francisco - Slashie
    * New York - Geoffrey White
+  * Russia - Geoffrey White
+   * Moscow - Geoffrey White
+  * France - Geoffrey White
+   * Paris - Geoffrey White
 
 = JSON Location Data =
 {{{
@@ -116,7 +120,7 @@
         "flagClues": [
             "Union Jack",
         ],
-"cities" : [
+	"cities" : [
           {
              "id": "LN-UK",
              "name": "London",
@@ -141,6 +145,63 @@
           },
        ]
 
+},
+{
+    "id": "RS",
+    "longName": "Russia",
+    "shortName": "Russia",
+    "adjective": "russian",
+    "cities" : [
+          {
+             "id": "MO-RS",
+             "countryId": "RS",
+             "name": "Moscow",
+             "lat": "55°45'06N",
+             "long": "37°37'04E",
+             "history": "Founded around 1147, Moscow has prospered despite numerous takeovers throughout it's history.  Since the collapse of the Soviet Union in 1991, Moscow has embraced capitalism and increasingly western lifestyles."
+             "description": "Moscow is the capital city of Russia.  It is the country's largest city and is responsible for approximately 24% of Russian GDP, despite being home to only 7% of the population."
+             "landMarks": [
+                 {
+                     "name": "Red Square",
+                     "footnote", "Historic city square in Moscow."
+                 },
+                 {
+                     "name": "Moscow State University",
+                     "footnote", "The largest university in Russia."
+                 }
+             ]
+          },
+       ]
+},
+{
+    "id": "FR",
+    "longName": "France",
+    "shortName": "France",
+    "adjective": "french",
+    "flagClues": [
+        "tricolour",
+    ],
+    "cities" : [
+          {
+             "id": "PA-FR",
+             "countryId": "FR",
+             "name": "Paris",
+             "lat": "48°51.4'N",
+             "long": "2°21.05'W",
+             "history": "The city of Paris has over 2000 years of history, perhaps most famously including the Storming of the Bastille during the French Revolution in 1789.  Paris underwent a massive industrial transformation in the 19th century, during which distinctive wide boulevards were built right into the heart of the city under Napoleon III."
+             "description": "Paris is the capital city of France and the seat of it's national government.  It's a popular tourist destination famous for art, culture and fashion."
+             "landMarks": [
+                 {
+                     "name": "Eiffel Tower",
+                     "footnote", "Popular monument standing 324 metres tall."
+                 },
+                 {
+                     "name": "Arc de Triomphe",
+                     "footnote", "Monument in honour of those who died in the French Revolution and the Napoleonic Wars."
+                 }
+             ]
+          },
+       ]
 },
 ]
 
