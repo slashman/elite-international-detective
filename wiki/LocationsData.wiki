@@ -3,6 +3,8 @@
 
 *Note: If you want to contribute, just contact me! and I'll add you as a contributor!*
 
+You can also contribute through the online forms! http://slashware.net/blog/?p=1226
+
 = Scheme description =
   * Cities are grouped in countries, each one with these attributes
    * id: An unique country identifier, uppercade two char ISO is preferred
