@@ -1,8 +1,10 @@
 package net.slashware.eid.ui.console;
 
 import java.io.File;
+import java.text.DateFormat;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Locale;
 import java.util.Vector;
 
 import net.slashie.libjcsi.CSIColor;
@@ -64,19 +66,21 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		drawAddornment();
 	}
 	
+	private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.US);
 	@Override
 	public void drawStatus() {
 		DetectiveActor detective = getDetective();
 		// Box 1
 		Calendar gameTime = ((EIDGame)player.getGame()).getGameTime(); 
-		csi.print(49, 3, gameTime.get(Calendar.YEAR)+", " +months[gameTime.get(Calendar.MONTH)] +" "+ gameTime.get(Calendar.DATE));
-		csi.print(49, 2, detective.getDescription());
-		csi.print(49, 4, (detective.getWeapon()!= null? detective.getWeapon().getDescription():"No Weapon"));
-		csi.print(49, 5, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
-		csi.print(49, 7, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
-		csi.print(49, 8, "Lethality: "+detective.getLethality().getDescription());
-		csi.print(49, 9, "Movement: "+detective.getWalkingMode().getDescription());
-		csi.print(49, 10,"Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
+		csi.print(49, 1, detective.getDescription());
+		csi.print(49, 2, (detective.getWeapon()!= null? detective.getWeapon().getDescription():"No Weapon"));
+		csi.print(49, 3, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
+		csi.print(49, 5, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
+		csi.print(49, 6, "Lethality: "+detective.getLethality().getDescription());
+		csi.print(49, 7, "Movement: "+detective.getWalkingMode().getDescription());
+		csi.print(49, 8, "Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
+		csi.print(4, 21, "~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~", CSIColor.RED);
+		csi.print(4, 22, detective.getLocation().getFullCityName()+". "+dateFormat.format(gameTime.getTime()));
 	}
 	
 	@Override
@@ -114,7 +118,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(0, 21, "|                                              |                               |", addornmentColor);
 		csi.print(0, 22, "|                                              |                               |", addornmentColor);
 		csi.print(0, 23, "|                                              |                               |", addornmentColor);
-		csi.print(0, 24, "\\= ELITE INTERNATIONAL DETECTIVE ==============^=Slashware Interactive 2011====/", addornmentColor);
+		csi.print(0, 24, "\\= ELITE INTERNATIONAL DETECTIVE ==============^==Slashware Interactive 2011===/", addornmentColor);
 
 		 
 	}

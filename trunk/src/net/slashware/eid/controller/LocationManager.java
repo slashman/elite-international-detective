@@ -20,5 +20,9 @@ public class LocationManager {
 		locationsMap.put(l.getId(), l);
 		locationsList.add(l);
 	}
+
+	public static Location getLocation(String locationId) {
+		return locationsMap.get(locationId);
+	}
 	
 }

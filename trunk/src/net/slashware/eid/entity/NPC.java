@@ -76,8 +76,10 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 	}
 	
 	public void arm(){
-		weapon = ItemFactory.createItem(weaponId);
-		clothing = ItemFactory.createItem(armorId);
+		if (weaponId != null)
+			weapon = ItemFactory.createItem(weaponId);
+		if (armorId != null)
+			clothing = ItemFactory.createItem(armorId);
 	}
 
 	@Override

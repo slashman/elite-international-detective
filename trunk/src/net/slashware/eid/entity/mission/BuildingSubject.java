@@ -16,6 +16,10 @@ public class BuildingSubject extends CrimeSubject{
 		} else {
 			return landmark.getName();
 		}
-		
+	}
+	
+	@Override
+	public String getSimpleDescription() {
+		return landmark.getName();
 	}
 }

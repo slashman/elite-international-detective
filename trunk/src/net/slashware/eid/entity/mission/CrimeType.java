@@ -28,4 +28,16 @@ public enum CrimeType {
 		}
 		return null;
 	}
+	
+	public String getCrimeTitle() {
+		switch(this){
+		case MURDER:
+			return "murder";
+		case KIDNAPPING:
+			return "abduction";
+		case TERRORIST_BOMBING:
+			return "bombing";
+		}
+		return null;
+	}
 }
