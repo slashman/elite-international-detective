@@ -37,6 +37,10 @@ You can also contribute through the online forms! http://slashware.net/blog/?p=1
    * Moscow - Geoffrey White
   * France - Geoffrey White
    * Paris - Geoffrey White
+  * Japan - Geoffrey White
+   * Tokyo - Geoffrey White
+  * India - Geoffrey White
+   * Mumbai - Geoffrey White
 
 = JSON Location Data =
 {{{
@@ -220,6 +224,55 @@ You can also contribute through the online forms! http://slashware.net/blog/?p=1
                  {
                      "name": "Arc de Triomphe",
                      "footnote", "Monument in honour of those who died in the French Revolution and the Napoleonic Wars."
+                 }
+             ]
+          },
+       ]
+},
+{
+    "id": "JP",
+    "longName": "Japan",
+    "shortName": "Japan",
+    "adjective": "japanese",
+    "flagClues": [
+        "sun disc",
+    ],
+    "cities" : [
+          {
+             "id": "TK-JP",
+             "countryId": "JP",
+             "name": "Tokyo",
+             "lat": "35°42'2N",
+             "long": "139°42'54E",
+             "history": "Originally a small fishing village, Tokugawa leyasu chose Tokyo (then Edo) as his base when he became shogun in 1603.  It grew into one of the largest cities in the world, and is now part of the world's most populous metropolitan area."
+             "description": "Tokyo is the capital of Japan.  It's famous for it's high population density and love of technology."
+             "landMarks": [
+                 {
+                     "name": "Tokyo Tower",
+                     "footnote", "Communications and observation tower, inspired by the Eiffel Tower."
+                 }
+             ]
+          },
+       ]
+},
+{
+    "id": "IN",
+    "longName": "Republic of India",
+    "shortName": "India",
+    "adjective": "indian",
+    "cities" : [
+          {
+             "id": "MU-IN",
+             "countryId": "IN",
+             "name": "Mumbai",
+             "lat": "18°58'30N",
+             "long": "72°49'33E",
+             "history": "Mumbai, formerly known as Bombay, is built on a collection of seven islands that were connected through civil engineering projects in the 18th and 19th centuries.  It has undergone massive expansion since India's independence from British rule in 1947."
+             "description": "Mumbai is the most populous city in India, a thriving commercial centre and the home of Bollywood.  However there is also widespread poverty and many people are forced to live in the slums."
+             "landMarks": [
+                 {
+                     "name": "Gateway of India",
+                     "footnote", "Basalt Arch built to commemorate the visit of King George V and Queen Mary."
                  }
              ]
           },
