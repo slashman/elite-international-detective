@@ -3,6 +3,7 @@ package net.slashware.eid.ui;
 import java.io.File;
 
 import net.slashware.eid.EIDGame;
+import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 
@@ -26,5 +27,7 @@ public abstract class EIDDisplay  {
 	public abstract DetectiveActor createDetective(EIDGame game);
 
 	public abstract void showMission(DetectiveActor detective, Mission mision);
+
+	public abstract void showFlight(Location location, Location destinationChoice);
 
 }

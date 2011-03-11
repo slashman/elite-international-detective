@@ -17,9 +17,10 @@ import net.slashware.eid.entity.mission.Criminal;
 import net.slashware.eid.entity.mission.CriminalOrganization;
 import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.mission.PersonSubject;
+import net.slashware.eid.entity.player.DetectiveActor;
 
 public class MissionGenerator {
-	public static Mission generateMission(Date currentDate, int difficulty){
+	public static Mission generateMission(Date currentDate, int difficulty, DetectiveActor detective){
 		CrimeType crimeType = selectCrimeType(difficulty);
 		Location location = selectCrimeLocation(difficulty);
 		CrimeSubject subject = selectSubject(crimeType, difficulty, location);
@@ -29,7 +30,9 @@ public class MissionGenerator {
 		int deadTimeDays = defineDeadTime(difficulty);
 		Date missionStart = getMissionStart(currentDate, deadTimeDays);
 		Date deadline = defineDeadline(missionStart, difficulty);
-		Mission mission = new Mission(crime, missionStart, deadline);
+		Mission mission = new Mission(crime, missionStart, deadline, difficulty, detective);
+		if (Location.getHQLocation() != crime.getLocation())
+			mission.addSuspiciousLocation(Location.getHQLocation(), crime.getLocation());
 		return mission;
 	}
 

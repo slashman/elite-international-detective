@@ -27,6 +27,7 @@ import net.slashware.eid.data.PlayerFactory;
 import net.slashware.eid.entity.item.EIDItem;
 import net.slashware.eid.entity.item.ItemType;
 import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 import net.slashware.eid.ui.CommonUI;
@@ -79,8 +80,10 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(49, 6, "Lethality: "+detective.getLethality().getDescription());
 		csi.print(49, 7, "Movement: "+detective.getWalkingMode().getDescription());
 		csi.print(49, 8, "Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
-		csi.print(4, 21, "~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~", CSIColor.RED);
-		csi.print(4, 22, detective.getLocation().getFullCityName()+". "+dateFormat.format(gameTime.getTime()));
+		csi.print(4, 20, "~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~", CSIColor.RED);
+		csi.print(4, 21, detective.getLevel().getDescription()+" at "+detective.getLocation().getFullCityName());
+		csi.print(4, 22, dateFormat.format(gameTime.getTime()));
+		
 	}
 	
 	@Override
@@ -256,10 +259,9 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		public DetectiveActor createDetective(EIDGame game) {
 			csi.cls();
 			csi.print(3,1, "Logging into InterSleuth operative servers...");
-			csi.refresh();
-			csi.waitKey(CharKey.SPACE);
 			csi.print(60,1, "[Ok]", ConsoleSystemInterface.LEMON);
 			csi.print(3,2, "Detective at the keyboard, please identify yourself:");
+			csi.print(5,4, "_");
 			csi.locateCaret(5, 4);
 			csi.refresh();
 			String name = csi.input(15);
@@ -299,26 +301,52 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		}
 
 		@Override
+		public void showFlight(Location location, Location destination) {
+			csi.cls();
+			csi.print(8, 3, "            #-##-##-##-##-##-##-#", ConsoleSystemInterface.WHITE);                    
+			csi.print(8, 4, "            >t.>t.>t.>@.>t.>t.>=.", ConsoleSystemInterface.GRAY);                   
+			csi.print(8, 5, "            >t.>=.>t.>t.>t.>=.>=.", ConsoleSystemInterface.GRAY);
+			csi.print(8, 6, "            .....................", ConsoleSystemInterface.RED);
+			csi.print(8, 7, "            >t.>=.>t.>=.>t.>t.>t.", ConsoleSystemInterface.GRAY);
+			csi.print(8, 8, "            >t.>t.>t.>t.>t.>t.>=.", ConsoleSystemInterface.GRAY);
+			csi.print(8, 9, "            #-##-##-##-##-##-##-#", ConsoleSystemInterface.WHITE);
+			                  
+			csi.print(8,13, "                     \\            ", ConsoleSystemInterface.RED);                  
+			csi.print(8,14, "               ,-  >--->          ", ConsoleSystemInterface.RED);                  
+			csi.print(8,15, "             ,/      /            ", ConsoleSystemInterface.RED);                  
+			csi.print(8,16, "           ,/                     ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8,17, "         ,/                       ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8,18, "     ,.-´                         ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8,19, "    o                                o", ConsoleSystemInterface.BLUE);
+			csi.print(8,20, location.getFullCityName(), ConsoleSystemInterface.RED);
+			csi.print(40,20, destination.getFullCityName(), ConsoleSystemInterface.RED);
+			csi.refresh();
+			csi.waitKey(CharKey.SPACE);
+
+		}
+		
+		@Override
 		public int showTitleScreen() {
 			csi.cls();
-			
-			csi.print(38, 4, "            /^\\/^\\", ConsoleSystemInterface.DARK_RED);
-			csi.print(38, 5, "            \\----|", ConsoleSystemInterface.DARK_RED);
-			csi.print(38, 6, "        _---'---~~~~-_", ConsoleSystemInterface.DARK_RED);
-			csi.print(38, 7, "         ~~~|~~L~|~~~~", ConsoleSystemInterface.DARK_RED);
-			csi.print(38, 8, "            (/_  /~~--", ConsoleSystemInterface.DARK_RED);
-			csi.print(38, 9, "          \\~ \\  /  /~", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,10, "        __~\\  ~ /   ~~----,", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,11, "        \\    | |       /  \\", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,12, "        /|   |/       |    |", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,13, "        | | | o  o     /~   |", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,14, "      _-~_  |        ||  \\  /", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,15, "     (// )) | o  o    \\\\---'", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,16, "     //_- |  |          \\", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,17, "    //   |____|\\______\\__\\", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,18, "    ~      |   / |    |", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,19, "            |_ /   \\ _|", ConsoleSystemInterface.DARK_RED);
-			csi.print(38,20, "          /~___|  /____\\", ConsoleSystemInterface.DARK_RED); 
+			int xstart = 42;
+			int ystart = 5;
+			csi.print(xstart, ystart+ 0, "            /^\\/^\\", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 1, "            \\----|", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 2, "        _---'---~~~~-_", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 3, "         ~~~|~~L~|~~~~", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 4, "            (/_  /~~--", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 5, "          \\~ \\  /  /~", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 6, "        __~\\  ~ /   ~~----,", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 7, "        \\    | |       /  \\", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 8, "        /|   |/       |    |", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+ 9, "        | | | o  o     /~   |", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+10, "      _-~_  |        ||  \\  /", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+11, "     (// )) | o  o    \\\\---'", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+12, "     //_- |  |          \\", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+13, "    //   |____|\\______\\__\\", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+14, "    ~      |   / |    |", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+15, "            |_ /   \\ _|", ConsoleSystemInterface.DARK_RED);
+			csi.print(xstart, ystart+16, "          /~___|  /____\\", ConsoleSystemInterface.DARK_RED); 
 			
 			csi.print(8, 4, "Elite International Detective", ConsoleSystemInterface.RED);
 			csi.print(10, 6, "a. Login into InterSleuth Servers", ConsoleSystemInterface.WHITE);

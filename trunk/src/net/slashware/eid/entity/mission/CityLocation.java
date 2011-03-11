@@ -2,27 +2,24 @@ package net.slashware.eid.entity.mission;
 
 public class CityLocation {
 	public enum CityLocationType {
-		AMBUSH,
-		INFORMANT,
-		HIDEOUT,
-		LAST_SEEN,
-		CRIME_SCENE;
+		AMBUSH ("Assault criminal safehaven"),
+		INFORMANT ("Informant"),
+		HIDEOUT ("The criminal hideout"),
+		LAST_SEEN ("Criminal was seen here"),
+		SUSPECTS ("Interrogate Suspects"),
+		WITNESS ("Visit witness"),
+		CRIME_SCENE ("The Crime Schene");
+
+		private String description;
 
 		public String getDescription() {
-			switch (this){
-			case AMBUSH:
-				return "Assault criminal safeplace";
-			case INFORMANT:
-				return "Meet with informant";
-			case HIDEOUT:
-				return "Criminal hideout";
-			case LAST_SEEN:
-				return "Criminal last seen";
-			case CRIME_SCENE:
-				return "Crime Scene";
-			}
-			return null;
+			return description;
 		}
+
+		private CityLocationType(String description) {
+			this.description = description;
+		}
+		
 	}
 	private String name;
 	private String levelCode;
