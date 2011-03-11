@@ -40,4 +40,16 @@ public enum CrimeType {
 		}
 		return null;
 	}
+
+	public String getLevelCodeSuffix() {
+		switch(this){
+		case MURDER:
+			return "MURDERPLACE";
+		case KIDNAPPING:
+			return "KIDNAPPINGPLACE";
+		case TERRORIST_BOMBING:
+			return "BOMBINGPLACE";
+		}
+		return null;
+	}
 }

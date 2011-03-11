@@ -1,6 +1,7 @@
 package net.slashware.eid.entity.level;
 
 import net.slashie.utils.Util;
+import net.slashware.eid.controller.LocationManager;
 
 public class Location {
 	private static final Landmark[] DEFAULT_LANDMARKS = new Landmark[]{
@@ -54,6 +55,10 @@ public class Location {
 		} else {
 			return (Landmark) Util.randomElementOf(DEFAULT_LANDMARKS);
 		}
+	}
+
+	public static Location getHQLocation() {
+		return LocationManager.getLocation("CO MDE");
 	}
 	
 	

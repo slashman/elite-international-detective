@@ -9,9 +9,9 @@ import net.slashie.serf.level.AbstractLevel;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.serf.sound.STMusicManagerNew;
 import net.slashware.eid.controller.LevelMaster;
-import net.slashware.eid.controller.LocationManager;
 import net.slashware.eid.controller.mission.MissionGenerator;
 import net.slashware.eid.entity.level.EIDLevel;
+import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 import net.slashware.eid.ui.EIDDisplay;
@@ -46,9 +46,9 @@ public class EIDGame extends SworeGame{
 	public void onGameStart(int gameType) {
 		loadMetadata();
 		setGameTime(3,8,1922);
-		Mission firstMission = MissionGenerator.generateMission(currentTime.getTime(), 1);
+		Mission firstMission = MissionGenerator.generateMission(currentTime.getTime(), 1, getDetective());
 		getDetective().setCurrentMission(firstMission);
-		getDetective().setLocation(LocationManager.getLocation("CO MDE"));
+		getDetective().setLocation(Location.getHQLocation());
 		EIDDisplay.thus.showMission(getDetective(), firstMission);
 		loadLevel("HQ");
 		
