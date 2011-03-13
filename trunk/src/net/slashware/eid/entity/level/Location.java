@@ -7,7 +7,7 @@ import net.slashie.utils.Util;
 import net.slashware.eid.controller.level.LocationManager;
 
 public class Location {
-	private static final Landmark[] DEFAULT_LANDMARKS = new Landmark[]{
+	public static final Landmark[] DEFAULT_LANDMARKS = new Landmark[]{
 		new Landmark("The bank"),
 		new Landmark("A marketplace"),
 		new Landmark("A shopping mall"),

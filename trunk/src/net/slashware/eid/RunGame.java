@@ -43,6 +43,7 @@ import net.slashie.utils.sound.midi.STMidiPlayer;
 import net.slashware.eid.action.CallTransport;
 import net.slashware.eid.action.ChangeLethality;
 import net.slashware.eid.action.Fire;
+import net.slashware.eid.action.Fly;
 import net.slashware.eid.action.Grab;
 import net.slashware.eid.action.Run;
 import net.slashware.eid.action.Use;
@@ -302,6 +303,7 @@ public class RunGame {
 		Action changeLethality = new ChangeLethality();
 		Action runAction = new Run();
 		Action moveAction = new CallTransport();
+		Action flyAction = new Fly();
 
 		keyBindings = new Properties();
 		keyBindings.put("DONOTHING1_KEY", readKeyString(keyConfig, "doNothing"));
@@ -336,10 +338,10 @@ public class RunGame {
 		UserAction[] userActions = new UserAction[] {
 			new UserAction(grabAction, i(readKeyString(keyConfig, "grab"))),
 			new UserAction(useAction, i(readKeyString(keyConfig, "use"))),
-			new UserAction(fireAction, i(readKeyString(keyConfig, "fire"))),
 			new UserAction(changeLethality, i(readKeyString(keyConfig, "changeLethality"))),
 			new UserAction(runAction, i(readKeyString(keyConfig, "run"))),
 			new UserAction(moveAction, i(readKeyString(keyConfig, "move"))),
+			new UserAction(flyAction, i(readKeyString(keyConfig, "fly"))),
 
 		};
 		
@@ -361,7 +363,7 @@ public class RunGame {
 			((GFXUISelector)uiSelector).init((SwingSystemInterface)si, userActions, UIconfiguration, walkAction, null, meleeAction, (GFXUserInterface)ui, keyBindings);
 			break;*/
 		case JCURSES_CONSOLE: case SWING_CONSOLE:
-			((EIDConsoleUI)ui).init((ConsoleSystemInterface)si, userCommands, null);
+			((EIDConsoleUI)ui).init((ConsoleSystemInterface)si, userCommands, fireAction);
 			uiSelector = new EIDConsoleUISelector();
 			((ConsoleUISelector)uiSelector).init((ConsoleSystemInterface)si, userActions, walkAction, fireAction, meleeAction, (ConsoleUserInterface)ui, keyBindings);
 			break;

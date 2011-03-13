@@ -1,6 +1,8 @@
 package net.slashware.eid.entity.mission;
 
 import net.slashie.serf.levelGeneration.bsp.BSPRoom;
+import net.slashie.serf.text.EnglishNameGenerator;
+import net.slashie.serf.text.SimpleEnglishNameGenerator;
 import net.slashie.util.Pair;
 import net.slashie.utils.Util;
 import net.slashware.eid.controller.level.UrbanZoneGenerator;
@@ -27,22 +29,33 @@ public class CityLocation {
 			this.description = description;
 		}
 		
+		private final static String[] places = new String [] {
+			"Warehouse",
+			"Public Library",
+			"Shopping Mall",
+			"Supermarket",
+			"Park",
+			"Government Building",
+			"Game Arcade",
+			"Firefighters Station"
+		};
+		private final EnglishNameGenerator generator = new SimpleEnglishNameGenerator();
 		public Pair<String,String> getRandomDescription() {
 			switch (this){
 			case AMBUSH:
-				return new Pair<String, String>("WAREHOUSE","Street 4, Warehouse");
+				return new Pair<String, String>("WAREHOUSE",Util.randomElementOf(places));
 			case CRIME_SCENE:
 				throw new RuntimeException("No Random Description Available for CRIME_SCENE");
 			case HIDEOUT:
 				throw new RuntimeException("No Random Description Available for HIDEOUT");
 			case LAST_SEEN:
-				return new Pair<String, String>("LIBRARY", "Public Library");
+				return new Pair<String, String>("LIBRARY", Util.randomElementOf(places));
 			case INFORMANT:
-				return new Pair<String, String>("MALL", "Shopping Mall");
+				return new Pair<String, String>("MALL", Util.randomElementOf(places));
 			case SUSPECTS:
 				return new Pair<String, String>("POLICE", "Police Station");
 			case WITNESS:
-				return new Pair<String, String>("HOUSE", "House of Mr. McCoy");
+				return new Pair<String, String>("HOUSE", "House of Mr. and Ms. "+generator.generateFullName(Util.chance(50)));
 			}
 			return null;
 		}
@@ -152,12 +165,12 @@ public class CityLocation {
 		charBuffer[yrand][xrand] = 'I';
 	}
 	private void setupHideout(char[][] charBuffer, BSPRoom room, int difficulty2) {
-		/*int criminals = Util.rand(5, (int)Math.round((room.getHeight()*room.getWidth())));
+		int criminals = Util.rand(5, (int)Math.round((room.getHeight()*room.getWidth())));
 		for (int i = 0; i < criminals; i++){
 			int xrand = Util.rand(room.getXpos()+4, room.getXpos()+room.getWidth()-4);
 			int yrand = Util.rand(room.getYpos()+4, room.getYpos()+room.getHeight()-4);
 			charBuffer[yrand][xrand] = 'C';
-		}*/
+		}
 		
 		int xrand = Util.rand(room.getXpos()+4, room.getXpos()+room.getWidth()-4);
 		int yrand = Util.rand(room.getYpos()+4, room.getYpos()+room.getHeight()-4);

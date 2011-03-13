@@ -10,13 +10,16 @@ public class PlayerFactory {
 		FEMALE
 	}
 	public static DetectiveActor generateDetective(String name, Sex sex, EIDGame game){
+		if (name.equals("")){
+			name = "Gumshoe";
+		}
 		DetectiveActor ret = new DetectiveActor();
 		ret.setName(name);
 		ret.setRank(Rank.ROOKIE);
 		ret.setGame(game);
 		ret.setClothing(ItemFactory.createItem("GREEN_RAINCOAT"));
-		ret.setWeapon(ItemFactory.createItem("BERGMANN_MP18"));
-		//ret.setWeapon(ItemFactory.createItem("WINCHESTHER_M12"));
+		ret.setWeapon(ItemFactory.createItem("Remington Double Derringer"));
+		ret.addItem(ItemFactory.createItem("BERGMANN_MP18"), 1);
 		ret.addItem(ItemFactory.createItem("DARK_BLUE_SUIT"), 1);
 		ret.addItem(ItemFactory.createItem("REMOTE_COM"), 1);
 		ret.setLuckyPoints(20);

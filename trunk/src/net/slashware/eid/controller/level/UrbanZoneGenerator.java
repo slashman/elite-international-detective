@@ -36,13 +36,14 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 
 		charMap.put("E", "FLOOR FEATURE CLUE");
 		
-		charMap.put("C", "FLOOR NPC CRIMINAL");
-		charMap.put("L", "FLOOR NPC LEADER");
+		charMap.put("C", "FLOOR CRIMINAL");
 		charMap.put("I", "FLOOR NPC INFORMANT");
 		charMap.put("U", "FLOOR NPC SUSPECT");
 		charMap.put("O", "FLOOR NPC COP");
 		charMap.put("W", "FLOOR NPC WITNESS");
 		charMap.put("v", "FLOOR NPC CIVILIAN");
+		
+		charMap.put("$", "FLOOR WEAPON");
 		
 		// Criminals
 		charMap.put("L", "FLOOR CRIMINAL_LEADER");
@@ -52,7 +53,8 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		CityLocation cityLocation, int width, int height,
 		int chaos,
 		int parks,
-		DetectiveActor detective
+		DetectiveActor detective,
+		int difficulty
 		){
 		UrbanLevel ret = new UrbanLevel();
 		ret.setDispatcher(new Dispatcher());
@@ -60,7 +62,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		char[][] charBuffer = new char[height][width];
 		for (BSPRoom room: rooms){
 			drawBlock(charBuffer, room);
-			cityLocation.drawBlock(charBuffer, room); // TEST
+			//cityLocation.drawBlock(charBuffer, room); // TEST
 		}
 		
 		// Pick one of the rooms for the cityLocation (Target), use the right border
@@ -84,7 +86,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 			}
 			charBuffer[y][x] = 'v';
 		}
-		/*
+		
 		int criminals = Util.rand(20, 30);
 		for (int i = 0; i < criminals; i++){
 			int x = Util.rand(5, width - 5);
@@ -94,7 +96,18 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 				y = Util.rand(5, height - 5);
 			}
 			charBuffer[y][x] = 'C';
-		}*/
+		}
+		
+		int items = Util.rand(5, 10);
+		for (int i = 0; i < items; i++){
+			int x = Util.rand(5, width - 5);
+			int y = Util.rand(5, height - 5);
+			while (charBuffer[y][x] != ','){
+				x = Util.rand(5, width - 5);
+				y = Util.rand(5, height - 5);
+			}
+			charBuffer[y][x] = '$';
+		}
 		
 		
 		// TODO: Crop the string map
