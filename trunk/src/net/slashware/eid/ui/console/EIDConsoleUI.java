@@ -28,6 +28,7 @@ import net.slashware.eid.entity.item.EIDItem;
 import net.slashware.eid.entity.item.ItemType;
 import net.slashware.eid.entity.level.EIDLevel;
 import net.slashware.eid.entity.level.Location;
+import net.slashware.eid.entity.level.UrbanLevel;
 import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 import net.slashware.eid.ui.CommonUI;
@@ -35,6 +36,18 @@ import net.slashware.eid.ui.EIDDisplay;
 
 
 public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterface{
+	private static final String[] GENERAL_DIRECTION_DESCRIPTIONS = new String[]{
+		"North",
+		"South",
+		"West",
+		"East",
+		"Northeast",
+		"Northwest",
+		"Southeast",
+		"Southwest",
+		""
+	};
+	
 	private ConsoleSystemInterface csi;
 			
 	public EIDConsoleUI (ConsoleSystemInterface csi){
@@ -52,12 +65,12 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		PC_POS = new Position(10, 10);
 		xrange = 9;
 		yrange = 9;
-		messageBox.setPosition(49,14);
+		messageBox.setPosition(49,13);
 		messageBox.setWidth(29);
 		messageBox.setHeight(10);
 		messageBox.setForeColor(ConsoleSystemInterface.WHITE);
 		
-		idList.setPosition(22,1);
+		idList.setPosition(24,2);
 		idList.setWidth(20);
 		idList.setHeight(10);
 	}
@@ -80,8 +93,18 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(49, 6, "Lethality: "+detective.getLethality().getDescription());
 		csi.print(49, 7, "Movement: "+detective.getWalkingMode().getDescription());
 		csi.print(49, 8, "Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
-		csi.print(4, 20, "~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~", CSIColor.RED);
-		csi.print(4, 21, detective.getLevel().getDescription()+" at "+detective.getLocation().getFullCityName());
+		csi.print(3, 0, "   ~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~   ", CSIColor.RED);
+		String targetPinpoint = "";
+		if(getPlayer().getLevel() instanceof UrbanLevel){
+			Position targetPosition = ((UrbanLevel)getPlayer().getLevel()).getTarget();
+			Position playerPosition = getPlayer().getPosition();
+			int generalDirection = Action.getGeneralDirection(playerPosition, targetPosition);
+			if (generalDirection != Action.SELF){
+				targetPinpoint = " (to the "+GENERAL_DIRECTION_DESCRIPTIONS[generalDirection]+")";
+			}
+		}
+		csi.print(4, 20, detective.getLevel().getDescription()+targetPinpoint);
+		csi.print(4, 21, detective.getLocation().getFullCityName());
 		csi.print(4, 22, dateFormat.format(gameTime.getTime()));
 		
 	}
@@ -96,7 +119,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 	}
 	
 	private void drawAddornment(){
-		int addornmentColor = ConsoleSystemInterface.RED;
+		int addornmentColor = ConsoleSystemInterface.DARK_RED;
 		csi.print(0,  0, "/==============================================v===============================\\", addornmentColor);
 		csi.print(0,  1, "|                                              |                               |", addornmentColor);
 		csi.print(0,  2, "|                                              |                               |", addornmentColor);
@@ -163,16 +186,18 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 	}
 	
 	public void showBlockingMessage(String message) {
+		int xpos = 15, ypos = 12, width = 50, height = 8;
+		
 		TextBox chatBox = new TextBox(csi);
-		chatBox.setHeight(8);
-		chatBox.setWidth(50);
-		chatBox.setPosition(15, 12);
+		chatBox.setHeight(height);
+		chatBox.setWidth(width);
+		chatBox.setPosition(xpos, ypos);
 		chatBox.setBorder(true);
 		chatBox.setForeColor(ConsoleSystemInterface.WHITE);
-		chatBox.setBorderColor(ConsoleSystemInterface.RED);
+		chatBox.setBorderColor(ConsoleSystemInterface.DARK_RED);
 		chatBox.setText(message);
-		chatBox.setTitle("[Space] to continue");
 		chatBox.draw();
+		csi.print(xpos+30, ypos+height, "[Space] to continue", ConsoleSystemInterface.RED);
 		csi.refresh();
 		csi.waitKey(CharKey.SPACE);
 	}
@@ -371,6 +396,42 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 				return 2;				
 			}
 			return 0;
+		}
+		
+		@Override
+		public void showLevelMap(UrbanLevel level) {
+			char[][] charMap = level.getCharMap();
+			csi.cls();
+			// Levels are 100 x 100, scale them to 20 x 20
+			//char[][] scaledMap = new char[20][20];
+			for (int xgroup = 0; xgroup < 19; xgroup++){
+				for (int ygroup = 0; ygroup < 19; ygroup++){
+					int streets = countStreets(charMap, xgroup, ygroup, 5);
+					if (streets > 0){
+						csi.print(ygroup, xgroup, '.', ConsoleSystemInterface.GRAY);
+					} else {
+						csi.print(ygroup, xgroup, '#', ConsoleSystemInterface.TEAL);
+					}
+				}
+			}
+			
+			Position start = level.getStart();
+			Position target = level.getTarget();
+			csi.print((int)Math.round((double)start.x/5.0d), (int)Math.round((double)start.y/5.0d), "S", ConsoleSystemInterface.RED);
+			csi.print((int)Math.round((double)target.x/5.0d), (int)Math.round((double)target.y/5.0d), "T", ConsoleSystemInterface.RED);
+			
+			csi.refresh();
+			csi.waitKey(CharKey.SPACE);
+		}
+
+		private int countStreets(char[][] charMap, int xgroup, int ygroup, int i) {
+			int count = 0;
+			for (int x = xgroup * i; x < xgroup*i + i; x++)
+				for (int y = ygroup * i; y < ygroup*i + i; y++)
+					if (charMap[y][x] == '.'){
+						count++;
+					}
+			return count;
 		}
 		
 	};

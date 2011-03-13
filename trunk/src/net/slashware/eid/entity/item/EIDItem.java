@@ -2,7 +2,6 @@ package net.slashware.eid.entity.item;
 
 import net.slashie.serf.baseDomain.AbstractItem;
 import net.slashie.utils.roll.Roll;
-import net.slashware.eid.entity.player.EquipmentSlot;
 
 public abstract class EIDItem extends AbstractItem implements Cloneable{
 	private static final long serialVersionUID = 1L;
@@ -21,13 +20,6 @@ public abstract class EIDItem extends AbstractItem implements Cloneable{
 	protected String sfx;
 	protected int shoots;
 	
-	private EquipmentSlot validEquipmentSlot;
-
-	
-	public EquipmentSlot getValidEquipmentSlot() {
-		return validEquipmentSlot;
-	}
-
 	public ItemType getItemType() {
 		return itemType;
 	}

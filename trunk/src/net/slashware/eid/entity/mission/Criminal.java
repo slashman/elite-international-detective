@@ -1,15 +1,25 @@
 package net.slashware.eid.entity.mission;
 
-import net.slashware.eid.entity.NPC;
-
-public class Criminal extends NPC{
+public class Criminal {
 	private static final long serialVersionUID = 1L;
+	private String description;
+	private String NPCID;
 	
-	public Criminal(String typeId, String description,String weaponId, String armorId,int luckyPoints, int profile, CriminalOrganization criminalOrganization, String... talkLines) {
-		super(typeId, description, true, false, weaponId, armorId,luckyPoints, talkLines);
+	public Criminal(String NPCID, String description,int profile, CriminalOrganization criminalOrganization) {
+		this.NPCID = NPCID;
 		this.profile = profile;
 		this.criminalOrganization = criminalOrganization;
+		this.description = description;
 	}
+	
+	public String getDescription() {
+		return description;
+	}
+	
+	public String getNPCID() {
+		return NPCID;
+	}
+	
 	private CriminalOrganization criminalOrganization;
 	private int profile;
 	public CriminalOrganization getCriminalOrganization() {

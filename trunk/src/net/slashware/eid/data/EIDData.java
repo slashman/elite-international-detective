@@ -1,17 +1,30 @@
 package net.slashware.eid.data;
 
-import net.slashie.libjcsi.ConsoleSystemInterface;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
+import net.slashie.serf.action.ActionSelector;
+import net.slashie.serf.action.NullSelector;
+import net.slashie.serf.ai.EnemyAI;
+import net.slashie.serf.ai.RangedActionSpec;
+import net.slashie.serf.ai.SimpleAI;
 import net.slashie.serf.level.AbstractCell;
-import net.slashie.serf.ui.consoleUI.CharAppearance;
+import net.slashie.serf.level.AbstractFeature;
 import net.slashie.utils.roll.Roll;
+import net.slashware.eid.action.Walk;
 import net.slashware.eid.entity.NPC;
 import net.slashware.eid.entity.item.Clothing;
+import net.slashware.eid.entity.item.ClueFeature;
 import net.slashware.eid.entity.item.EIDItem;
 import net.slashware.eid.entity.item.Gadget;
 import net.slashware.eid.entity.item.Weapon;
+import net.slashware.eid.entity.level.Country;
 import net.slashware.eid.entity.level.Landmark;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.level.SimpleLevelCell;
+import net.slashware.eid.entity.mission.Criminal;
+import net.slashware.eid.entity.mission.CriminalOrganization;
 
 public class EIDData {
 	public static AbstractCell[] getCellDefinitions (){
@@ -23,7 +36,14 @@ public class EIDData {
 			new SimpleLevelCell("V_GLASS", "Glass Panel", true, false),
 			new SimpleLevelCell("H_GLASS", "Glass Panel", true, false),
 			new SimpleLevelCell("DESK", "Desk", true, false),
-			new SimpleLevelCell("DOOR", "Door", false, true)
+			new SimpleLevelCell("DOOR", "Door", false, true),
+			
+			new SimpleLevelCell("STREET", "Street", false, false),
+			new SimpleLevelCell("STREET_H_BAR", "Street", false, false),
+			new SimpleLevelCell("STREET_V_BAR", "Street", false, false),
+			new SimpleLevelCell("WALKWAY", "Walkway", false, false),
+			new SimpleLevelCell("BUILDING_WALL", "Building", true, true),
+			new SimpleLevelCell("BLIND_DOOR", "Door", true, true),
 		};
 	}
 	
@@ -43,34 +63,213 @@ public class EIDData {
 	}
 
 	public static NPC[] getNPCs() {
+		ActionSelector NULL = new NullSelector();
+		ActionSelector simpleWalk = new SimpleAI(null, new Walk());
+		EnemyAI simpleEnemy = new EnemyAI(new Walk());
+		ArrayList<RangedActionSpec> fireSpec = new ArrayList<RangedActionSpec>();
+		RangedActionSpec e = new RangedActionSpec("Fire", 10, 100, "","");
+		fireSpec.add(e);
+		simpleEnemy.setRangedActions(fireSpec);
+		
+		
 		return new NPC[]{
-			new NPC("JEFF","Boss Jeff",true,false,"THOMPSON_M1921","DARK_BLACK_SUIT",80,"Remember, we are working on the honor basis", "This gun is my welcome gift. Good luck!", "Kill only as a last resource"),
-			new NPC("LALI","Lali",true,false,null,"RED_DRESS",80,"Hello, sweetheart!"),
-			new NPC("AGENT","Detective",false,false,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"The bastards have pulled another caper!", "Where's the coffee machine?", "Welcome to the agency, rookie", "I need some tickets..."),
-			new NPC("AIRPORT_LADY","Airport Lady",false,false,null,null,5,"Good Day!"),
-			new NPC("AIRPORT_GUY","Gentleman",false,false,null,null,5,"Good Day!")
+			new NPC("JEFF","Boss Jeff",true,simpleWalk,"THOMPSON_M1921","DARK_BLACK_SUIT",80,"Remember, we are working on the honor basis", "This gun is my welcome gift. Good luck!", "Kill only as a last resource"),
+			new NPC("LALI","Lali",true,simpleWalk,null,"RED_DRESS",80,"Hello, sweetheart!"),
+			new NPC("AGENT","Detective",false,simpleWalk,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"The bastards have pulled another caper!", "Where's the coffee machine?", "Welcome to the agency, rookie", "I need some tickets..."),
+			new NPC("AIRPORT_LADY","Airport Lady",false,simpleWalk,null,null,5,"Good Day!"),
+			new NPC("AIRPORT_GUY","Gentleman",false,simpleWalk,null,null,5,"Good Day!"),
+			
+			new NPC("INFORMANT","Informant",false,NULL,null,null,5,"I have some info that may come in handy..."),
+			new NPC("SUSPECT","Suspect",false,NULL,null,null,5,". . ."),
+			new NPC("WITNESS","Witness",false,NULL,null,null,5,"Please, protect me!"),
+			new NPC("COP","Cop",false,simpleWalk,"WINCHESTHER_M12", "BLACK_RAINCOAT",20,"To protect and serve!"),
+			new NPC("CRIMINAL","Criminal",false,simpleEnemy,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"Die!"),
+			new NPC("LEADER","Criminal Leader",false,simpleEnemy,"THOMPSON_M1921", "DARK_BLACK_SUIT",80,"Die!"),
+			new NPC("CIVILIAN","Civilian",false,simpleWalk,null,null,5,"Hello, Sir."),
+			
+			// Criminals
+			new NPC("KORNEL_SANDIEGO","Kornel Sandiego",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",2,"Chaos should reign!")
 			
 		};
 	}
 
 	public static Location[] getLocations(){
+		Map<String, Country> countriesMap = new HashMap<String, Country>();
+		Country[] countries = new Country[]{
+			new Country("US", "The United States of America", "United States", "americans",
+				new String[]{
+					"stars over blue",
+					"red stripes",
+					"white stripes",
+				},
+				new String []{
+					"bald eagle with its wings displayed",
+					"13 arrows",
+					"olive branch",
+					"E pluribus unum",
+					"blue chief, red and white stripes"
+				}),
+			new Country("Hu", "The Hungarian Republic", "Hungary", "hungarian",
+				new String[]{
+					"red bar",
+					"white bar",
+					"green bar"
+				},
+				new String []{
+					"black shockheaded dog (puli)",
+					"fatty soup (gulas)",
+					"carpathian basin"
+				}),
+			new Country("IC", "Republic of Iceland", "Iceland", "icelander",
+				new String[]{
+					"blue as the sky",
+					"snow-white cross",
+					"fiery-red cross inside the white cross"
+				},
+				new String []{
+					"silver on a sky-blue shield",
+					"the landvættir",
+					"pahoehoe lava block",
+					"bull, griffin, dragon and stone giant",
+					"azure, on a cross argent a cross gules."
+				}),			
+			new Country("UK", "The United Kingdom of Great Britain and Northern Ireland", "United Kingdom", "british",
+				new String[]{
+					"union jack",
+					"red cross of St. George",
+					"cross of St. Patrick",
+					"saltire of St. Andrew",
+				},
+				new String []{
+					"three passant guardant lions",
+					"rampant lion",
+					"a harp",
+					"statant guardant lion",
+					"white unicorn",
+					"Dieu et mon droit"
+				}),		
+			new Country("RU", "Russia", "Russia", "russian",
+				new String[]{// flag clues 
+				},
+				new String []{
+				}),
+			new Country("CA", "Canada", "Canada", "canadian",
+				new String[]{// flag clues 
+				},
+				new String []{
+				}),
+			new Country("FR", "France", "France", "french",
+				new String[]{// flag clues 
+				},
+				new String []{
+				}),
+			new Country("JP", "Japan", "Japan", "japanese",
+				new String[]{// flag clues 
+				},
+				new String []{
+				}),
+			new Country("CO", "Colombia", "Colombia", "colombian",
+				new String[]{ // flag clues 
+				},
+				new String []{ // clues
+				}),
+			new Country("IN", "Republic of India", "India", "indian",
+					new String[]{// flag clues 
+					},
+					new String []{ // clues
+					}),
+		};
+		for (Country country: countries){
+			countriesMap.put(country.getId(), country);
+		}
 		return new Location[]{
-			new Location("SF-US", "United States", "San Francisco", "San Francisco is the city of... etc", "american",
+			new Location("US1", countriesMap.get("US"), "San Francisco", 
+					"description", 
+					"history",
+				new String[]{  // clues
+				},
 				new Landmark [] {
 					new Landmark("The Golden Gate Bridge", "one of the most heavily used bridges in the world")
 				}
 			),
-			new Location("SF-CA", "Canada", "Vancouver", "Vancouver, widely known for being Vancouver... etc", "canadian",
+			new Location("US2", countriesMap.get("US"), "Sacramento", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
 				new Landmark [] {
-					new Landmark("The Canada Place", "the main cruise ship terminal for the region")
-				}	
+					new Landmark("The state capital of California", "a beautiful stone building built in a neoclassical style")
+				}
 			),
-			new Location("CO MDE", "Colombia", "Medellin", "San Francisco is the city of... etc", "colombian",
-					new Landmark [] {
+			new Location("UK1", countriesMap.get("UK"), "London", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+					new Landmark("The Buckingham Palace", "home of Queen Elizabeth II.")
+				}
+			),			
+			new Location("RU1", countriesMap.get("RU"), "Moscow", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+					new Landmark("The Red Square", "historic city square in Moscow.")
+				}
+			),
+			new Location("JP1", countriesMap.get("JP"), "Tokio", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+					new Landmark("The Tokyo Tower", "a communications and observation tower, inspired by the Eiffel Tower.")
+				}
+			),
+			new Location("IN1", countriesMap.get("IN"), "Mumbai", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+					new Landmark("Gateway of India", "Basalt Arch built to commemorate the visit of King George V and Queen Mary.")
+				}
+			),
+			new Location("FR1", countriesMap.get("FR"), "Paris", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+					new Landmark("Eiffel Tower", "a popular monument standing 324 metres tall.")
+				}
+			),
+			new Location("CA1", countriesMap.get("CA"), "Vancouver", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
+				new Landmark("The Canada Place", "the main cruise ship terminal for the region")
+				}
+			),
+			new Location("CO1", countriesMap.get("CO"), "Medellín", 
+					"description", 
+					"history",
+				new String[]{ // clues
+				},
+				new Landmark [] {
 					new Landmark("The Coltejer Tower", "the tallest building of the region")
-				}	
+				}
 			)
+		};
+	}
 
+	public static AbstractFeature[] getFeatures() {
+		return new ClueFeature[]{
+			new ClueFeature()
 		};
 	}
 }

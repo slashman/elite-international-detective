@@ -10,7 +10,7 @@ public class Placeholder_Pattern extends StaticPattern {
 		this.cellMap = new String [][]{{
 			"####################################################",
 			"#..................................................#",
-			"#..................................................#",
+			"#........................N.........................#",
 			"#..................................................#",
 			"#..................................................#",
 			"#..................................................#",
@@ -26,6 +26,7 @@ public class Placeholder_Pattern extends StaticPattern {
 		charMap.put(".", "FLOOR");
 		charMap.put("#", "BLUE_WALL");
 		charMap.put("S", "FLOOR EXIT _START");
+		charMap.put("N", "FLOOR NPC OBJECTIVE_NPC");
 		unleashers = new Unleasher[]{};
 	}
 

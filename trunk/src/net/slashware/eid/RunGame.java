@@ -48,7 +48,7 @@ import net.slashware.eid.action.Run;
 import net.slashware.eid.action.Use;
 import net.slashware.eid.action.Walk;
 import net.slashware.eid.controller.GameFiles;
-import net.slashware.eid.controller.LocationManager;
+import net.slashware.eid.controller.level.LocationManager;
 import net.slashware.eid.data.EIDData;
 import net.slashware.eid.data.ItemFactory;
 import net.slashware.eid.data.NPCFactory;
@@ -456,7 +456,7 @@ public class RunGame {
 	}
 
 	private static void initializeFeatures(){
-		
+		FeatureFactory.getFactory().init(EIDData.getFeatures());
 	}
 
 	private static void initializeSelectors(){

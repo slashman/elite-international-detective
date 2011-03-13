@@ -28,4 +28,6 @@ public class EIDLevel extends BufferedLevel {
 	public Integer getBloodAt(Position where){
 		return bloods.get(where.toString());
 	}
+
+
 }
