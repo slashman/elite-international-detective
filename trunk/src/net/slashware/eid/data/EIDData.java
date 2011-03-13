@@ -248,8 +248,8 @@ public class EIDData {
 			new Country("CO", "Colombia", "Colombia", "colombian",
 				new String[]{ // flag clues
 					"yellow, generosity",
-					"red, bravery",
-					"blue, vigilance"
+					"red, blood",
+					"blue, oceans"
 				},
 				new String []{ // clues
 					"vulture holding a banner",
@@ -269,6 +269,26 @@ public class EIDData {
 					"a circular abacus",
 					"the guardians of the four directions",
 					"a lotus"
+					}),
+			new Country("AR", "Argentina", "Argentina", "argentina",
+					new String[]{ // flag clues
+						"light blue and white",
+						"sun of may"
+					},
+					new String []{ // clues
+						"sun of may",
+						"shaking hands",
+						"Phrygian cap"
+					}),
+			new Country("AU", "Australia", "Australia", "australian",
+					new String[]{ // flag clues
+						"blue field with union flag",
+						"seven pointed star",
+						"southern cross"
+					},
+					new String []{ // clues
+						"red kangaroo",
+						"emu",
 					}),
 		};
 		for (Country country: countries){
@@ -292,7 +312,7 @@ public class EIDData {
 				  "post card with a state capital building with magnolia's"
 				},
 				new Landmark [] {
-					new Landmark("The state capital of California", "a beautiful stone building built in a neoclassical style")
+					new Landmark("The state capital", "a beautiful stone building built in a neoclassical style")
 				}
 			),
 			new Location("UK1", countriesMap.get("UK"), "London", 
@@ -322,7 +342,7 @@ public class EIDData {
 					"post card with cherry blossoms"
 				},
 				new Landmark [] {
-					new Landmark("The Tokyo Tower", "a communications and observation tower, inspired by the Eiffel Tower.")
+					new Landmark("The Communication Tower", "a communications and observation tower, inspired by the Eiffel Tower.")
 				}
 			),
 			new Location("IN1", countriesMap.get("IN"), "Mumbai", 
@@ -332,7 +352,7 @@ public class EIDData {
 					"post card with a large Victorian era sea port terminus"
 				},
 				new Landmark [] {
-					new Landmark("Gateway of India", "Basalt Arch built to commemorate the visit of King George V and Queen Mary.")
+					new Landmark("Gateway of Basalt", "Basalt Arch built to commemorate the visit of King George V and Queen Mary.")
 				}
 			),
 			new Location("FR1", countriesMap.get("FR"), "Paris", 
@@ -356,12 +376,34 @@ public class EIDData {
 				}
 			),
 			new Location("CO1", countriesMap.get("CO"), "Medellín", 
-					"description", 
-					"history",
+					"In the past decade, Medellín has become a destination for national and international tourism. The city has the infrastructure to supply the demands of a tourist industry at any level, and today is the second top destination in Colombia. ", 
+					"Medellín was founded in 1616 by the Spaniard Francisco Herrera Y Campuzano as Saint Lawrence Town in present-day El Poblado. In 1675 the queen consort Mariana of Austria created the Town of Our Lady at Candelaria.",
 				new String[]{ // clues
+					"city of the eternal spring",
+					"mountain capital",
 				},
 				new Landmark [] {
 					new Landmark("The Coltejer Tower", "the tallest building of the region")
+				}
+			),
+			new Location("AR1", countriesMap.get("AR"), "Buenos Aires", 
+					"Strongly influenced by European culture, Buenos Aires is sometimes referred to as the Paris of South America", 
+					"The city of Buenos Aires was first established as City of Our Lady Saint Mary of the Fair Winds after Our Lady of Bonaria (Patron Saint of the capital of Sardinia, Cagliari) on 2 February 1536 by a Spanish expedition led by Pedro de Mendoza .",
+				new String[]{ // clues
+					"paris of south america"
+				},
+				new Landmark [] {
+					new Landmark("Teatro Colón", "an internationally-rated opera house")
+				}
+			),
+			new Location("AU1", countriesMap.get("AU"), "Sidney", 
+					"Sydney has a reputation as an international centre for commerce, arts, fashion, culture, entertainment, music, education and tourism, making it one of GaWC's Alpha + world cities.", 
+					"The site of the first British colony in Australia, Sydney was established in 1788 at Sydney Cove by Arthur Phillip, commodore of the First Fleet as a penal colony.",
+				new String[]{ // clues
+					"new outh wales"
+				},
+				new Landmark [] {
+					new Landmark("Opera House", "a multi-venue performing arts centre")
 				}
 			)
 		};

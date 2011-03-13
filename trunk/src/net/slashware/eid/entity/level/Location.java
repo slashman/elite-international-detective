@@ -76,7 +76,8 @@ public class Location {
 			// Use a famous landmark
 			return (Landmark) Util.randomElementOf(landmarks);
 		} else {
-			return (Landmark) Util.randomElementOf(DEFAULT_LANDMARKS);
+			return (Landmark) Util.randomElementOf(landmarks);
+			//return (Landmark) Util.randomElementOf(DEFAULT_LANDMARKS);
 		}
 	}
 

@@ -101,12 +101,13 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			Position playerPosition = getPlayer().getPosition();
 			int generalDirection = Action.getGeneralDirection(playerPosition, targetPosition);
 			if (generalDirection != Action.SELF){
-				targetPinpoint = " (to the "+GENERAL_DIRECTION_DESCRIPTIONS[generalDirection]+")";
+				targetPinpoint = "    (to the "+GENERAL_DIRECTION_DESCRIPTIONS[generalDirection]+")";
 			}
 		}
-		csi.print(4, 20, detective.getLevel().getDescription()+targetPinpoint);
-		csi.print(4, 21, detective.getLocation().getFullCityName());
-		csi.print(4, 22, dateFormat.format(gameTime.getTime()));
+		csi.print(4, 20, detective.getLevel().getDescription());
+		csi.print(4, 21, targetPinpoint);
+		csi.print(4, 22, detective.getLocation().getFullCityName());
+		csi.print(4, 23, dateFormat.format(gameTime.getTime()));
 		
 	}
 	
