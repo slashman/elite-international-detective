@@ -240,17 +240,18 @@ public class EIDData {
 		}
 		return new Location[]{
 			new Location("US1", countriesMap.get("US"), "San Francisco", 
-					"description", 
-					"history",
+					"San Francisco is the financial, cultural, and transportation center of the San Francisco Bay Area and one the most important cities on the US west coast.", 
+					"In 1776, the Spanish established a fort at the Golden Gate and a mission named for Francis of Assisi on the site. The California Gold Rush in 1848 propelled the city into a period of rapid growth, increasing the population in one year from 1,000 to 25,000.",
 				new String[]{  // clues
+				  
 				},
 				new Landmark [] {
 					new Landmark("The Golden Gate Bridge", "one of the most heavily used bridges in the world")
 				}
 			),
 			new Location("US2", countriesMap.get("US"), "Sacramento", 
-					"description", 
-					"history",
+					"Sacramento is the capital city of the U.S. state of California. It is located at the Sacramento River and the American River in the northern portion of California's expansive Central Valley.", 
+					"Sacramento became a city through the efforts of John Sutter, a Swiss immigrant, and James W. Marshall. Sacramento grew quickly thanks to the protection of Sutter's Fort, which was established by Sutter in 1839.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
@@ -258,8 +259,8 @@ public class EIDData {
 				}
 			),
 			new Location("UK1", countriesMap.get("UK"), "London", 
-					"description", 
-					"history",
+					"London is the capital of England and the United Kingdom. London is a leading global city, with strengths in the arts, commerce, education, entertainment, fashion, finance, healthcare, media, R&D and tourism all contributing to its prominence.", 
+					"London has been a major settlement for two millennia, its history going back to its founding by the Romans, who called it Londinium.[6] London's ancient core, the City of London, largely retains its square-mile mediaeval boundaries.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
@@ -267,17 +268,17 @@ public class EIDData {
 				}
 			),			
 			new Location("RU1", countriesMap.get("RU"), "Moscow", 
-					"description", 
-					"history",
+					"Moscow is the capital and the most populous city of Russia. With the Kremlin at it's heart it is the largest city on the European continent.", 
+					"In the course of its history the city has served as the capital of a progression of states, from the medieval Grand Duchy of Moscow and the subsequent Tsardom of Russia to the Soviet Union.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
 					new Landmark("The Red Square", "historic city square in Moscow.")
 				}
 			),
-			new Location("JP1", countriesMap.get("JP"), "Tokio", 
-					"description", 
-					"history",
+			new Location("JP1", countriesMap.get("JP"), "Tokyo", 
+					"Tokyo is the capital of Japan, the center of the Greater Tokyo Area, and the largest metropolitan area of Japan. It is the seat of the Japanese government and the Imperial Palace, and the home of the Japanese Imperial Family.", 
+					"Tokyo was originally a small fishing village named Edo. It was first fortified by the Edo clan, in the late 12th century. It became the de facto capital of Japan even while the emperor lived in Kyoto, the imperial capital.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
@@ -285,8 +286,8 @@ public class EIDData {
 				}
 			),
 			new Location("IN1", countriesMap.get("IN"), "Mumbai", 
-					"description", 
-					"history",
+					"Mumbai is the capital of the Indian state of Maharashtra. It is the most populous city in India, and the second most populous city in the world, with a population of approximately 14 million.", 
+					"Mumbai is built on what was once an archipelago of seven islands since the Stone Age. Since then these islands have gone through countless rulers and become unified under the British.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
@@ -294,8 +295,8 @@ public class EIDData {
 				}
 			),
 			new Location("FR1", countriesMap.get("FR"), "Paris", 
-					"description", 
-					"history",
+					"Paris is the capital and largest city in France, situated on the river Seine, in northern France. Considered the city of Light but also the city of Love it is one of the most influential cities in the world.",
+					"Initially founded by celtics, it grew tremendously under the Romans. However it was the Industrial Revolution and the much later Universal Expositions that made Paris into a centre of technology, trade, and tourism",
 				new String[]{ // clues
 				},
 				new Landmark [] {
@@ -303,8 +304,8 @@ public class EIDData {
 				}
 			),
 			new Location("CA1", countriesMap.get("CA"), "Vancouver", 
-					"description", 
-					"history",
+					"Vancouver is a coastal city located in the Lower Mainland of British Columbia, Canada. It is the most populous city in Western Canada and the third-largest in the country.", 
+					"The Fraser Gold Rush of 1858 brought over 25,000 men, mainly from California, to nearby New Westminster on the Fraser River, on their way to the Fraser Canyon, bypassing what would become Vancouver. Vancouver is among British Columbia's youngest cities.",
 				new String[]{ // clues
 				},
 				new Landmark [] {
