@@ -93,6 +93,8 @@ public class EIDData {
 		};
 	}
 
+
+	
 	public static Location[] getLocations(){
 		Map<String, Country> countriesMap = new HashMap<String, Country>();
 		Country[] countries = new Country[]{
@@ -109,7 +111,7 @@ public class EIDData {
 					"E pluribus unum",
 					"blue chief, red and white stripes"
 				}),
-			new Country("Hu", "The Hungarian Republic", "Hungary", "hungarian",
+			new Country("HU", "The Hungarian Republic", "Hungary", "hungarian",
 				new String[]{
 					"red bar",
 					"white bar",
@@ -149,34 +151,88 @@ public class EIDData {
 					"Dieu et mon droit"
 				}),		
 			new Country("RU", "Russia", "Russia", "russian",
-				new String[]{// flag clues 
+				new String[]{
+					"white for the silver armor", //http://en.wikipedia.org/wiki/Flag_of_Russia , Meaning and origin of the colours
+					"blue for his cape",
+					"red for the field of battle"
 				},
 				new String []{
+					"double headed eagle",
+					"dragon slaying knight",
+					"scepter and globus cruciger"
 				}),
 			new Country("CA", "Canada", "Canada", "canadian",
 				new String[]{// flag clues 
+					"maple leaf",
+					"white surrounded by red"
 				},
 				new String []{
+					"maple leaf",
+					"three passant guardant lions",  //Same as UK, that could get messy ;\
+					"rampant lion",
+					"a harp",
+					"statant guardant lion",
+					"white unicorn",
+					"Dieu et mon droit"
+				}),
+			new Country("BE", "Belgium", "Belgium", "belgian",
+				new String[]{// flag clues 
+					"red for blood",
+					"black for death",
+					"yellow for gold"
+				},
+				new String []{
+					"l'union fait la force",
+					"eendracht maakt macht",
+					"nine provinces",
+					"two lions supporting a banner"
 				}),
 			new Country("FR", "France", "France", "french",
 				new String[]{// flag clues 
+					"blue for Saint Martin",
+					"red for Saint Denis",
+					"white for Unity",
 				},
 				new String []{
+					"wide shield",
+					"head of a lion",
+					"oak branch for wisdom",
+					"laruel branch for victory"
 				}),
 			new Country("JP", "Japan", "Japan", "japanese",
 				new String[]{// flag clues 
+					"the sun",
+					"red on white",
+					"red disc",
 				},
 				new String []{
+					"imperial seal",
+					"chrysanthemum",
 				}),
 			new Country("CO", "Colombia", "Colombia", "colombian",
-				new String[]{ // flag clues 
+				new String[]{ // flag clues
+					"yellow, generosity",
+					"red, bravery",
+					"blue, vigilance"
 				},
 				new String []{ // clues
+					"vulture holding a banner",
+					"two flags hanging sideways",
+					"ships for a maritime history",
+					"phrygian cap for for liberty and freedom",
 				}),
 			new Country("IN", "Republic of India", "India", "indian",
 					new String[]{// flag clues 
+					"bar of deep saffron",
+					"bar of white",
+					"bar of indian green",
+					"many spoked wheel"
 					},
 					new String []{ // clues
+					"four lions back to back",
+					"a circular abacus",
+					"the guardians of the four directions",
+					"a lotus"
 					}),
 		};
 		for (Country country: countries){
