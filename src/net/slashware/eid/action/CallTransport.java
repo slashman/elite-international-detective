@@ -21,36 +21,6 @@ public class CallTransport extends Action{
 	@Override
 	public void execute() {
 		DetectiveActor player = (DetectiveActor) performer;
-		// Fly, move this to another action?
-		if (player.isOnAirport()){
-			if (UserInterface.getUI().promptChat("Take a flight? Y/N")){
-				List<Location> destinations =  new ArrayList<Location>(player.getCurrentMission().getSuspiciousLocations(player.getLocation()));
-				if (player.getCurrentMission().getPreviousLocation(player.getLocation()) != null){
-					destinations.add(player.getCurrentMission().getPreviousLocation(player.getLocation()));
-				}
-				if (destinations == null || destinations.size() == 0){
-					((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("The agency does not yet know of any possible locations for the suspect. We need more info from you!");
-				} else {
-					String[] destinationsStr = new String[destinations.size()];
-					int i = 0;
-					for (Location destination: destinations){
-						destinationsStr[i] = destination.getFullCityName();
-						i++;
-					}
-					int choice = UserInterface.getUI().switchChat("Airport Lady", "Where are you travelling, sir?", destinationsStr);
-					if (choice != -1){
-						Location destinationChoice = destinations.get(choice);
-						int tripTimeHours = calculateTrip(player, destinationChoice);
-						((EIDGame)player.getGame()).elapseHours(tripTimeHours);
-						EIDDisplay.thus.showFlight(player.getLocation(), destinationChoice);
-						player.setLocation(destinationChoice);
-						player.getCurrentMission().gotoLocation(destinationChoice);
-					}
-				}
-				return;
-			}
-		} 
-		
 		if (player.isOnHQ()){
 			// Go to airport
 			if (UserInterface.getUI().promptChat("Go to the airport? Y/N")){
@@ -109,10 +79,6 @@ public class CallTransport extends Action{
 				}
 			}
 		}
-	}
-
-	private int calculateTrip(DetectiveActor player, Location destinationChoice) {
-		return 6;
 	}
 
 	private int calculateTrip(DetectiveActor player,

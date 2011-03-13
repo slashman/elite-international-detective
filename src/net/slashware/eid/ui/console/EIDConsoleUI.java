@@ -15,6 +15,7 @@ import net.slashie.libjcsi.textcomponents.MenuItem;
 import net.slashie.libjcsi.textcomponents.TextBox;
 import net.slashie.serf.action.Action;
 import net.slashie.serf.action.Actor;
+import net.slashie.serf.action.Message;
 import net.slashie.serf.game.Equipment;
 import net.slashie.serf.sound.STMusicManagerNew;
 import net.slashie.serf.ui.UserCommand;
@@ -119,7 +120,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 	}
 	
 	private void drawAddornment(){
-		int addornmentColor = ConsoleSystemInterface.DARK_RED;
+		int addornmentColor = ConsoleSystemInterface.RED;
 		csi.print(0,  0, "/==============================================v===============================\\", addornmentColor);
 		csi.print(0,  1, "|                                              |                               |", addornmentColor);
 		csi.print(0,  2, "|                                              |                               |", addornmentColor);
@@ -130,8 +131,8 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(0,  7, "|                                              |                               |", addornmentColor);
 		csi.print(0,  8, "|                                              |                               |", addornmentColor);
 		csi.print(0,  9, "|                                              |                               |", addornmentColor);
-		csi.print(0, 10, "|                                              |                               |", addornmentColor);
-		csi.print(0, 11, "|                                              |                               |", addornmentColor);
+		csi.print(0, 10, "|                                              |[m]ove  [g]rab  [z] walk speed |", addornmentColor);
+		csi.print(0, 11, "|                                              |[f]ly   [u]se   [ ] fire       |", addornmentColor);
 		csi.print(0, 12, "|                                              >===============================<", addornmentColor);
 		csi.print(0, 13, "|                                              |                               |", addornmentColor);
 		csi.print(0, 14, "|                                              |                               |", addornmentColor);
@@ -290,6 +291,10 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			csi.locateCaret(5, 4);
 			csi.refresh();
 			String name = csi.input(15);
+			if (name.trim().equals("")){
+				name = "Jack";
+			}
+			name = name.trim();
 			csi.print(3,6, "There's no record of your name in the InterSleuth Network. ");
 			csi.print(3,7, "Are you new here? (Y/N)");
 			csi.refresh();
@@ -328,23 +333,20 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		@Override
 		public void showFlight(Location location, Location destination) {
 			csi.cls();
-			csi.print(8, 3, "            #-##-##-##-##-##-##-#", ConsoleSystemInterface.WHITE);                    
-			csi.print(8, 4, "            >t.>t.>t.>@.>t.>t.>=.", ConsoleSystemInterface.GRAY);                   
-			csi.print(8, 5, "            >t.>=.>t.>t.>t.>=.>=.", ConsoleSystemInterface.GRAY);
-			csi.print(8, 6, "            .....................", ConsoleSystemInterface.RED);
-			csi.print(8, 7, "            >t.>=.>t.>=.>t.>t.>t.", ConsoleSystemInterface.GRAY);
-			csi.print(8, 8, "            >t.>t.>t.>t.>t.>t.>=.", ConsoleSystemInterface.GRAY);
-			csi.print(8, 9, "            #-##-##-##-##-##-##-#", ConsoleSystemInterface.WHITE);
-			                  
-			csi.print(8,13, "                     \\            ", ConsoleSystemInterface.RED);                  
-			csi.print(8,14, "               ,-  >--->          ", ConsoleSystemInterface.RED);                  
-			csi.print(8,15, "             ,/      /            ", ConsoleSystemInterface.RED);                  
-			csi.print(8,16, "           ,/                     ", ConsoleSystemInterface.GRAY);                  
-			csi.print(8,17, "         ,/                       ", ConsoleSystemInterface.GRAY);                  
-			csi.print(8,18, "     ,.-´                         ", ConsoleSystemInterface.GRAY);                  
-			csi.print(8,19, "    o                                o", ConsoleSystemInterface.BLUE);
-			csi.print(8,20, location.getFullCityName(), ConsoleSystemInterface.RED);
-			csi.print(40,20, destination.getFullCityName(), ConsoleSystemInterface.RED);
+			csi.print(8, 2, "                     \\            ", ConsoleSystemInterface.RED);                  
+			csi.print(8, 3, "               ,-  >--->          ", ConsoleSystemInterface.RED);                  
+			csi.print(8, 4, "             ,/      /            ", ConsoleSystemInterface.RED);                  
+			csi.print(8, 5, "           ,/                     ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8, 6, "         ,/                       ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8, 7, "     ,.-´                         ", ConsoleSystemInterface.GRAY);                  
+			csi.print(8, 8, "    o                                o", ConsoleSystemInterface.BLUE);
+			csi.print(8,10, location.getFullCityName(), ConsoleSystemInterface.WHITE);
+			csi.print(40,10, destination.getFullCityName(), ConsoleSystemInterface.WHITE);
+
+			
+			printTextBox(destination.getHistory(), 2, 11, 35, 10, CSIColor.BLACK);
+			printTextBox(destination.getDescription(), 38, 11, 35, 10, CSIColor.BLACK);
+
 			csi.refresh();
 			csi.waitKey(CharKey.SPACE);
 
@@ -374,51 +376,48 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			csi.print(xstart, ystart+16, "          /~___|  /____\\", ConsoleSystemInterface.DARK_RED); 
 			
 			csi.print(8, 4, "Elite International Detective", ConsoleSystemInterface.RED);
-			csi.print(10, 6, "a. Login into InterSleuth Servers", ConsoleSystemInterface.WHITE);
-			csi.print(10, 7, "b. Resume Journey", ConsoleSystemInterface.WHITE);
-			csi.print(10, 8, "c. Exit", ConsoleSystemInterface.WHITE);
+			csi.print(10, 6, "a. login into InterSleuth Servers", ConsoleSystemInterface.WHITE);
+			csi.print(10, 7, "b. exit", ConsoleSystemInterface.WHITE);
 			
 			csi.print(8,19, "Version "+EIDGame.getVersion()+", Developed by Slashware Interactive 2011", ConsoleSystemInterface.RED);
 			csi.refresh();
 	    	STMusicManagerNew.thus.playKey("TITLE");
 	    	CharKey x = new CharKey(CharKey.NONE);
 			while (x.code != CharKey.A && x.code != CharKey.a &&
-					x.code != CharKey.B && x.code != CharKey.b &&
-					x.code != CharKey.C && x.code != CharKey.c)
+					x.code != CharKey.B && x.code != CharKey.b)
 				x = csi.inkey();
 			csi.cls();
 			switch (x.code){
 			case CharKey.A: case CharKey.a:
 				return 0;
 			case CharKey.B: case CharKey.b:
-				return 1;
-			case CharKey.C: case CharKey.c:
-				return 2;				
+				return 2;
 			}
 			return 0;
 		}
 		
 		@Override
 		public void showLevelMap(UrbanLevel level) {
+			int mx = 27, my = 0;
 			char[][] charMap = level.getCharMap();
 			csi.cls();
-			// Levels are 100 x 100, scale them to 20 x 20
+			// Levels are 100 x 100, scale them to 25 x 25
 			//char[][] scaledMap = new char[20][20];
-			for (int xgroup = 0; xgroup < 19; xgroup++){
-				for (int ygroup = 0; ygroup < 19; ygroup++){
-					int streets = countStreets(charMap, xgroup, ygroup, 5);
+			for (int xgroup = 0; xgroup < 24; xgroup++){
+				for (int ygroup = 0; ygroup < 24; ygroup++){
+					int streets = countStreets(charMap, xgroup, ygroup, 4);
 					if (streets > 0){
-						csi.print(ygroup, xgroup, '.', ConsoleSystemInterface.GRAY);
+						csi.print(mx+xgroup, my+ygroup, '.', ConsoleSystemInterface.GRAY);
 					} else {
-						csi.print(ygroup, xgroup, '#', ConsoleSystemInterface.TEAL);
+						csi.print(mx+xgroup, my+ygroup, '#', ConsoleSystemInterface.TEAL);
 					}
 				}
 			}
 			
 			Position start = level.getStart();
 			Position target = level.getTarget();
-			csi.print((int)Math.round((double)start.x/5.0d), (int)Math.round((double)start.y/5.0d), "S", ConsoleSystemInterface.RED);
-			csi.print((int)Math.round((double)target.x/5.0d), (int)Math.round((double)target.y/5.0d), "T", ConsoleSystemInterface.RED);
+			csi.print(mx+(int)Math.floor((double)start.x/4.0d), my+(int)Math.floor((double)start.y/4.0d), ">", ConsoleSystemInterface.RED);
+			csi.print(mx+(int)Math.floor((double)target.x/4.0d), my+(int)Math.floor((double)target.y/4.0d), "<", ConsoleSystemInterface.RED);
 			
 			csi.refresh();
 			csi.waitKey(CharKey.SPACE);
@@ -548,6 +547,4 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			return "N/A";
 		}
 	}
-  		
-  		
 }

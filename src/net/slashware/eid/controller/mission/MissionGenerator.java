@@ -46,8 +46,7 @@ public class MissionGenerator {
 	public final static int MAX_DIFFICULTY = 9;
 
 	private static Date defineDeadline(Date missionStart, int difficulty) {
-		int missionDays = MAX_DIFFICULTY * 10 - Util.rand(0, 10) - difficulty * MAX_DIFFICULTY;
-		missionDays = 1;
+		int missionDays = MAX_DIFFICULTY * 10 - Util.rand(0, 8) - difficulty * MAX_DIFFICULTY;
 		Calendar c = Calendar.getInstance();
 		c.setTime(missionStart);
 		c.add(Calendar.DAY_OF_YEAR, missionDays);
@@ -105,7 +104,18 @@ public class MissionGenerator {
 	}
 	
 	private static Criminal createCriminal(CrimeType crimeType, int difficulty) {
+		switch (difficulty){
+		case 0: case 1: 
+			return new Criminal("Ethan Black","Ethan Black",10,CriminalOrganization.IRON_FIST);
+		case 2:	case 3: case 4: 
+			return new Criminal("Adrianeth Avil","Adrianeth Avil",10,CriminalOrganization.YAHARAI_LALANA);
+		case 5:	case 6: case 7:
+			return new Criminal("Slash","Slash",10,CriminalOrganization.BLUE_HOPE);
+		case 8: case 9:
+			return new Criminal("KORNEL_SANDIEGO","Kornel Sandiego",10,CriminalOrganization.BLACK_KNIGHTS);	
+		}
 		return new Criminal("KORNEL_SANDIEGO","Kornel Sandiego",10,CriminalOrganization.BLACK_KNIGHTS);
+		
 	}
 
 	private static CrimeType selectCrimeType(int difficulty) {

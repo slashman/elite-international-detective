@@ -23,7 +23,7 @@ public class CommonUI {
 		} else {
 			builder.append("Criminal organization \"");
 			builder.append(m.getCrime().getCriminal().getCriminalOrganization().getName());
-			builder.append("\" has taken responsability for this crime.");
+			builder.append("\" has taken responsability for this crime. Our prime suspect is "+m.getCrime().getCriminal().getDescription()+", international criminal.");
 		}
 		builder.append(" XXX XXX ");
 		builder.append("Your assignment: Travel to ");

@@ -58,9 +58,9 @@ public class DetectiveActor extends Player implements EIDActor {
 				getLevel().addMessage("Time is over! Criminal could strike anytime!");
 			}
 		}
-		if (Util.chance(50))
+		if (Util.chance(10))
 			recoverLuck();
-		if (Util.chance(70))
+		if (Util.chance(50))
 			recoverStamina();
 	}
 	

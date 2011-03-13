@@ -87,8 +87,6 @@ public class Mission {
 		int locationsSteps = (int)Math.round((double)(difficulty + 1) * 1.5d);
 		locationsSteps = locationsSteps + Util.rand(-1, 1);
 		
-		locationsSteps = 0; //Test
-		
 		LocationChainpiece currentChainPiece = null;
 		firstChainPiece = new LocationChainpiece(null, Location.getHQLocation());
 		if (Location.getHQLocation() != crime.getLocation()){
@@ -230,7 +228,7 @@ public class Mission {
 					Pair<String,String> detailedLocation = cityLocationType.getRandomDescription();
 					newSuspiciousPlaces.add(new CityLocation(
 							detailedLocation.getB(), 
-							location.getId()+"_"+detailedLocation.getA(), 
+							location.getId()+"_"+Math.random(), 
 							cityLocationType, 
 							location,
 							difficulty));
@@ -354,6 +352,11 @@ public class Mission {
 	
 	public boolean isCriminalKilled() {
 		return criminalKilled;
+	}
+
+
+	public int getDifficulty() {
+		return difficulty;
 	}
 	
 }

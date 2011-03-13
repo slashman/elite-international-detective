@@ -208,5 +208,9 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 	public EIDItem getClothing() {
 		return clothing;
 	}
+
+	public void setWeapon(EIDItem weapon) {
+		this.weapon = weapon;
+	}
 	
 }

@@ -9,6 +9,7 @@ import net.slashware.eid.data.ItemFactory;
 import net.slashware.eid.data.NPCFactory;
 import net.slashware.eid.entity.NPC;
 import net.slashware.eid.entity.item.EIDItem;
+import net.slashware.eid.entity.item.Weapon;
 import net.slashware.eid.entity.player.DetectiveActor;
 
 public class EIDStaticGenerator extends StaticGenerator{
@@ -29,6 +30,14 @@ public class EIDStaticGenerator extends StaticGenerator{
 			NPC npc = NPCFactory.createNPC(((DetectiveActor)l.getPlayer()).getCurrentMission().getCrime().getCriminal().getNPCID());
 			npc.setPosition(where.x+x,where.y+y,where.z);
 			l.addActor(npc);
+		}else if (cmds[1].equals("CRIMINAL")){
+			NPC npc = NPCFactory.createNPC("CRIMINAL");
+			npc.setWeapon (Weapon.getWeaponByTier(((DetectiveActor)l.getPlayer()).getCurrentMission().getDifficulty()));
+			npc.setPosition(where.x+x,where.y+y,where.z);
+			l.addActor(npc);
+		}else if (cmds[1].equals("WEAPON")){
+			EIDItem item = Weapon.getWeaponByTier(((DetectiveActor)l.getPlayer()).getCurrentMission().getDifficulty());
+			l.addItem(Position.add(where, new Position(x,y)), item);
 		}
 	}
 }

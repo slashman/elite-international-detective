@@ -5,6 +5,7 @@ import net.slashie.serf.level.AbstractLevel;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.serf.levelGeneration.StaticPattern;
 import net.slashie.utils.Position;
+import net.slashie.utils.Util;
 import net.slashware.eid.data.levels.Airport_Pattern;
 import net.slashware.eid.data.levels.HQ_Pattern;
 import net.slashware.eid.data.levels.Placeholder_Pattern;
@@ -18,9 +19,11 @@ public class LevelMaster {
 		EIDLevel ret = null;
 		if (levelMetaData instanceof UrbanLevelMetadata){
 			UrbanLevelMetadata ulm = (UrbanLevelMetadata) levelMetaData;
+			int difficulty = ((DetectiveActor)p).getCurrentMission().getDifficulty();
 			ret = urbanZoneGenerator.generateUrbanZone(
-					ulm.getTarget(), 100, 100, 5, 0, (DetectiveActor)p);
+					ulm.getTarget(), 100, 100, 5, 0, (DetectiveActor)p, difficulty);
 			ret.setDescription("Near "+ulm.getTarget().getName());
+			ret.setMusicKey("R"+Util.rand(0, 4));
 			ret.setID(levelMetaData.getLevelID());
 		} else {
 			String levelID = levelMetaData.getLevelID();

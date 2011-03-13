@@ -3,6 +3,7 @@ package net.slashware.eid.data;
 import java.util.Hashtable;
 
 import net.slashware.eid.entity.item.EIDItem;
+import net.slashware.eid.entity.item.Weapon;
 
 public class ItemFactory {
 	private static Hashtable<String, EIDItem> definitions = new Hashtable<String, EIDItem>();
@@ -21,5 +22,8 @@ public class ItemFactory {
 		return (EIDItem) ret.clone();
 	}
 
+	public static Weapon createWeaponByTier(int tier){
+		return (Weapon) createItem(Weapon.getWeaponByTier(tier).getFullID());
+	}
 
 }

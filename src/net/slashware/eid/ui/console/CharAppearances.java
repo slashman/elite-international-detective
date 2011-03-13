@@ -2,6 +2,8 @@ package net.slashware.eid.ui.console;
 
 import net.slashie.libjcsi.ConsoleSystemInterface;
 import net.slashie.serf.ui.consoleUI.CharAppearance;
+import net.slashie.utils.roll.Roll;
+import net.slashware.eid.entity.item.Weapon;
 
 public class CharAppearances {
 	public static CharAppearance[] getCharAppearances(){
@@ -27,6 +29,34 @@ public class CharAppearances {
 			new CharAppearance("BERGMANN_MP18", '/', ConsoleSystemInterface.BROWN),
 			new CharAppearance("THOMPSON_M1921", '/', ConsoleSystemInterface.GRAY),
 			new CharAppearance("WINCHESTHER_M12", '\\', ConsoleSystemInterface.BROWN),
+			
+			
+			new CharAppearance("BERGMANN_MP18", '\\', ConsoleSystemInterface.BROWN),
+			new CharAppearance("THOMPSON_M1921", '\\', ConsoleSystemInterface.BROWN),
+			new CharAppearance("MP38", '\\', ConsoleSystemInterface.BROWN),
+			new CharAppearance("MP40", '\\', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Mauser M32", '\\', ConsoleSystemInterface.BROWN),
+
+			// Pistols
+			new CharAppearance("Mauser C-96", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Kolibri", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("FN Browning M1900", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Remington Double Derringer", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Astra M1921", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Walther P38", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("P08 Luger", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Walther PP", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Browning Hi-Power", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Cloth M1911 pistol", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Colt Peacemaker", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Colt Detective Special", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Smith and Weason M10", '/', ConsoleSystemInterface.BROWN),
+
+			new CharAppearance("Browning Auto 5", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Savage 311-R", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Winchester M1897", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("Winchester M1901", '/', ConsoleSystemInterface.BROWN),
+			new CharAppearance("WINCHESTHER_M12", '/', ConsoleSystemInterface.BROWN),
 			
 			new CharAppearance("GREEN_RAINCOAT", 'T', ConsoleSystemInterface.GREEN),
 			new CharAppearance("DARK_BLUE_SUIT", 'T', ConsoleSystemInterface.BLUE),
