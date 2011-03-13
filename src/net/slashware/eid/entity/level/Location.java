@@ -1,7 +1,10 @@
 package net.slashware.eid.entity.level;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import net.slashie.utils.Util;
-import net.slashware.eid.controller.LocationManager;
+import net.slashware.eid.controller.level.LocationManager;
 
 public class Location {
 	private static final Landmark[] DEFAULT_LANDMARKS = new Landmark[]{
@@ -11,29 +14,49 @@ public class Location {
 		new Landmark("A theme park")
 	};
 	
+	private Country country;
+	
 	private String id;
-	private String countryName;
 	private String cityName;
 	private String description;
-	private String gentilice;
+	private String history;
+	private String[] insigniaClues;
 	private Landmark[] landmarks;
 	
-	public Location(String id, String countryName, String cityName,
-			String description, String gentilice, Landmark[] landmarks) {
+	private List<String> clues = new ArrayList<String>();  
+	
+	public Location(String id, Country country, String cityName,
+			String description, String history, String[] insigniaClues, Landmark[] landmarks) {
 		super();
 		this.id = id;
-		this.countryName = countryName;
+		if (country == null)
+			throw new RuntimeException("Invalid country for city "+id);
+		this.country = country;
 		this.cityName = cityName;
 		this.description = description;
-		this.gentilice = gentilice;
+		this.history = history;
 		this.landmarks = landmarks;
+		this.insigniaClues = insigniaClues;
+		// Create clues
+		for (Landmark landmark: landmarks){
+			clues.add(landmark.getName());
+		}
+		for (String insigniaClue: insigniaClues){
+			clues.add(insigniaClue);
+		}
+		for (String flagClue: country.getFlagClues()){
+			clues.add(flagClue);
+		}
+		for (String insigniaClue: country.getInsigniaClues()){
+			clues.add(insigniaClue);
+		}
 	}
 	
 	public String getId() {
 		return id;
 	}
 	public String getCountryName() {
-		return countryName;
+		return country.getShortname();
 	}
 	public String getCityName() {
 		return cityName;
@@ -42,14 +65,14 @@ public class Location {
 		return description;
 	}
 	public String getGentilice() {
-		return gentilice;
+		return country.getAdjective();
 	}
 	
 	public String getFullCityName(){
-		return cityName+", "+countryName;
+		return cityName+", "+getCountryName();
 	}
 	public Landmark getALandmark() {
-		if (Util.chance(20)){
+		if (Util.chance(80)){
 			// Use a famous landmark
 			return (Landmark) Util.randomElementOf(landmarks);
 		} else {
@@ -58,7 +81,20 @@ public class Location {
 	}
 
 	public static Location getHQLocation() {
-		return LocationManager.getLocation("CO MDE");
+		return LocationManager.getLocation("CO1");
+	}
+
+	public String getHistory() {
+		return history;
+	}
+
+	public String[] getInsigniaClues() {
+		return insigniaClues;
+	}
+
+	
+	public String getAClue() {
+		return (String) Util.randomElementOf(clues);
 	}
 	
 	

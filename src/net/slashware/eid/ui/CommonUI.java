@@ -7,7 +7,7 @@ import net.slashware.eid.entity.mission.Mission;
 import net.slashware.eid.entity.player.DetectiveActor;
 
 public class CommonUI {
-	private static final DateFormat DATEFORMAT = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT, Locale.US);
+	private static final DateFormat DATEFORMAT = DateFormat.getDateTimeInstance(DateFormat.MEDIUM, DateFormat.SHORT, Locale.US);
 
 	public static String composeMissionDescription(DetectiveActor detective, Mission m){
 		StringBuilder builder = new StringBuilder();

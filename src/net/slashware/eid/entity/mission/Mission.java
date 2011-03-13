@@ -1,11 +1,14 @@
 package net.slashware.eid.entity.mission;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Stack;
+
+import com.sun.net.httpserver.Filter.Chain;
 
 import net.slashie.serf.game.SworeGame;
 import net.slashie.serf.ui.UserInterface;
@@ -13,7 +16,7 @@ import net.slashie.util.Pair;
 import net.slashie.utils.Util;
 import net.slashware.eid.EIDGame;
 import net.slashware.eid.EIDUserInterface;
-import net.slashware.eid.controller.LocationManager;
+import net.slashware.eid.controller.level.LocationManager;
 import net.slashware.eid.controller.mission.MissionGenerator;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.CityLocation.CityLocationType;
@@ -25,6 +28,13 @@ public class Mission {
 		private Location location;
 		private List<Location> falseNextLocations;
 		private LocationChainpiece nextLocation;
+		private List<String> clues = new ArrayList<String>();
+		public void addClue(String clue){
+			clues.add(clue);
+		}
+		public List<String> getClues() {
+			return clues;
+		}
 		private LocationChainpiece(Location previousLocation, Location location) {
 			super();
 			this.location = location;
@@ -58,6 +68,7 @@ public class Mission {
 	private LocationChainpiece firstChainPiece;
 	private Stack<LocationChainpiece> chainPieceStack = new Stack<LocationChainpiece>();
 	private DetectiveActor detective;
+	private int difficulty;
 	
 	public Mission(Crime crime, Date missionStart, Date deadline, int difficulty, DetectiveActor detective) {
 		super();
@@ -66,15 +77,18 @@ public class Mission {
 		this.missionStart = missionStart;
 		this.detective = detective;
 		generateLocationPath(difficulty);
+		this.difficulty = difficulty;
 		chainPieceStack.push(firstChainPiece);
 	}
 	
 	
 	private void generateLocationPath(int difficulty) {
 		int baseFalseNextLocations = difficulty + 2;
-		int locationsSteps = (int)Math.round((double)(difficulty + 3) * 1.5d);
-		locationsSteps = locationsSteps + Util.rand(-2, 2);
-
+		int locationsSteps = (int)Math.round((double)(difficulty + 1) * 1.5d);
+		locationsSteps = locationsSteps + Util.rand(-1, 1);
+		
+		locationsSteps = 0; //Test
+		
 		LocationChainpiece currentChainPiece = null;
 		firstChainPiece = new LocationChainpiece(null, Location.getHQLocation());
 		if (Location.getHQLocation() != crime.getLocation()){
@@ -87,7 +101,7 @@ public class Mission {
 		 
 		for (int i = 0; i < locationsSteps; i++){
 			int numberOfFalseNextLocations = baseFalseNextLocations + Util.rand(-1, 1);
-			List<Location> falseNextLocations = getPossibleNextLocations(currentChainPiece.getLocation(), numberOfFalseNextLocations+1);
+			List<Location> falseNextLocations = getPossibleNextLocations(currentChainPiece.getLocation(), numberOfFalseNextLocations+1, currentChainPiece.getPreviousLocation());
 			if (falseNextLocations.size() == 0){
 				// Unable to decide next locations, we give this time.
 				break;
@@ -95,16 +109,17 @@ public class Mission {
 			Location nextLocation = (Location) Util.randomElementOf(falseNextLocations);
 			falseNextLocations.remove(nextLocation);
 			currentChainPiece.setNextLocation(new LocationChainpiece(currentChainPiece.getLocation(), nextLocation));
+			currentChainPiece.setFalseNextLocations(falseNextLocations);
 			currentChainPiece = currentChainPiece.getNextLocation();
 		}
 	}
 	
-	private List<Location> getPossibleNextLocations(Location location, int numberOfLocations) {
+	private List<Location> getPossibleNextLocations(Location location, int numberOfLocations, Location excludeLocation) {
 		List<Location> ret = new ArrayList<Location>();
 		int giveup = 100;
 		for (int i = 0; i < numberOfLocations; i++){
 			Location randomLocation = LocationManager.getRandomLocation(); // TODO: Pick nearby ones
-			if (randomLocation == location || ret.contains(randomLocation)){
+			if (randomLocation == location || ret.contains(randomLocation) || randomLocation == excludeLocation){
 				giveup--;
 				if (giveup > 0)
 					continue;
@@ -141,16 +156,21 @@ public class Mission {
 	
 	private Map<String, List<Location>> suspiciousNextLocations = new HashMap<String, List<Location>>(); // Filled with evidence and interrogation
 	public List<Location> getSuspiciousLocations(Location location) {
-		List<Location> ret = suspiciousNextLocations.get(location.getId());
+		String key = location.getId()+" in "+getCurrentChainPiece().hashCode();
+		List<Location> ret = suspiciousNextLocations.get(key);
 		if (ret == null){
 			ret = new ArrayList<Location>();
-			suspiciousNextLocations.put(location.getId(), ret);
+			suspiciousNextLocations.put(key, ret);
 		}
 		return ret;
 	}
 	
 	public void addSuspiciousLocation(Location from, Location to){
 		getSuspiciousLocations(from).add(to);
+	}
+	
+	private LocationChainpiece getCurrentChainPiece(){
+		return chainPieceStack.peek();
 	}
 	
 	/**
@@ -166,39 +186,57 @@ public class Mission {
 	 * @param location
 	 */
 	public void doSleuthwork(Location location) {
-		if (isSleuthworkDone(location)){
+		LocationChainpiece currentChainPiece = getCurrentChainPiece();
+		if (isSleuthworkDone(location, currentChainPiece)){
 			return;
 		}
 		List<CityLocation> newSuspiciousPlaces = new ArrayList<CityLocation>();
-		LocationChainpiece currentChainPiece = chainPieceStack.peek();
+		
 		
 		// are we on HQ?
 		if (currentChainPiece == firstChainPiece && crime.getLocation() != location){
-			((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("There is nothing to investigate here, fly to the crime scene!");
-
+			if (!isCriminalKilled())
+				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("There is nothing to investigate here, fly to the crime scene!");
+			return;
 		}
 		
 		// Are we on the crime location?
 		if (location == crime.getLocation()){
-			newSuspiciousPlaces.add(new CityLocation(crime.getSubject().getSimpleDescription(), location.getId()+"_"+crime.getCrimeType().getLevelCodeSuffix(), CityLocationType.CRIME_SCENE));
+			newSuspiciousPlaces.add(new CityLocation(
+					crime.getSubject().getSimpleDescription(), 
+					location.getId()+"_"+crime.getCrimeType().getLevelCodeSuffix(), 
+					CityLocationType.CRIME_SCENE, 
+					location,
+					difficulty));
 		}
 		
 		// Is this the end of the chain?
 		if (currentChainPiece.getNextLocation() == null){
-			newSuspiciousPlaces.add(new CityLocation("Criminal hideout", location.getId()+"_HIDEOUT", CityLocationType.HIDEOUT));
+			newSuspiciousPlaces.add(new CityLocation(
+					"Criminal hideout", 
+					location.getId()+"_HIDEOUT", 
+					CityLocationType.HIDEOUT, 
+					location,
+					difficulty));
 			((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("You have trustworthy info confirming the location of the criminal!");
 		} else {		
 			// Are we on the right track?
 			if (location == currentChainPiece.getLocation()){ 
-				int locations = Util.rand(2, 6);
+				int locations = Util.rand(2, 4);
 				for (int i = 0; i < locations; i++){
 					CityLocationType cityLocationType = (CityLocationType) Util.randomElementOf(CityLocationType.values());
 					if (cityLocationType == CityLocationType.CRIME_SCENE || cityLocationType == CityLocationType.HIDEOUT)
-						cityLocationType = CityLocationType.LAST_SEEN;
-					Pair<String,String> detailedLocation = getRandomDescriptionFor(cityLocationType);
-					newSuspiciousPlaces.add(new CityLocation(detailedLocation.getB(), location.getId()+"_"+detailedLocation.getA(), cityLocationType));
+						cityLocationType = CityLocationType.AMBUSH;
+					Pair<String,String> detailedLocation = cityLocationType.getRandomDescription();
+					newSuspiciousPlaces.add(new CityLocation(
+							detailedLocation.getB(), 
+							location.getId()+"_"+detailedLocation.getA(), 
+							cityLocationType, 
+							location,
+							difficulty));
 				}
-				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("You find about "+locations+" places to look for clues leading to the criminal!");
+				// This is done when the first objective at the place is completed. doInternationalIntelligence(location);
+				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("There are "+locations+" places in your list to look for clues leading to the criminal!");
 			} else {
 				// Waste of time...
 				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("You were unable to find anything suspicious... may be you are on the wrong track?");
@@ -206,48 +244,63 @@ public class Mission {
 		}
 		suspiciousLookingMap.put(location.getId(), newSuspiciousPlaces);
 		((EIDGame)detective.getGame()).elapseHours(getSleuthCostHours());
-		setSleuthworkDone(location);
+		setSleuthworkDone(location, currentChainPiece);
+		
+		
 	}
 	
+	public void doInternationalIntelligence(Location location) {
+		LocationChainpiece currentChainPiece = getCurrentChainPiece();
+		
+		if (isInternationalIntlDone(currentChainPiece)){
+			return;
+		}
+		if (currentChainPiece.getFalseNextLocations() == null || currentChainPiece.getFalseNextLocations().size() == 0)
+			return;
+		List<Location> nextLocations = new ArrayList<Location>(currentChainPiece.getFalseNextLocations());
+		if (currentChainPiece.getNextLocation() != null)
+			nextLocations.add(currentChainPiece.getNextLocation().getLocation());
+		Collections.shuffle(nextLocations);
+		for (Location nextLocation: nextLocations){
+			addSuspiciousLocation(location, nextLocation);
+		}
+		
+		if (nextLocations.size()>0){
+			((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("You research around and find out that the criminal was in "+location.getCityName()+", but has already fled "+location.getCountryName()+". XXX XXX Further cooperation with the "+
+					"InterSleuth Networks provides "+nextLocations.size()+" potential locations.");
+		} else {
+			((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("Your information network points out the criminal is on "+location.getCountryName());
+		}
+		setInternationalIntlDone(currentChainPiece); 
+	}
+
+	private Map<String, Boolean> internationalIntDoneMap = new HashMap<String, Boolean>();
+
+	private boolean isInternationalIntlDone(LocationChainpiece currentChainPiece) {
+		return internationalIntDoneMap.get(""+currentChainPiece.hashCode()) != null;
+	}
+	
+	private void setInternationalIntlDone(LocationChainpiece currentChainPiece) {
+		internationalIntDoneMap.put(""+currentChainPiece.hashCode(), Boolean.TRUE);
+	}
+
 	private int getSleuthCostHours() {
 		return 4; // TODO: Fancy Things
 	}
-
-
-	private Pair<String,String> getRandomDescriptionFor(CityLocationType cityLocationType) {
-		switch (cityLocationType){
-		case AMBUSH:
-			return new Pair<String, String>("WAREHOUSE","Street 4, Warehouse");
-		case CRIME_SCENE:
-			throw new RuntimeException("No Random Description Available for CRIME_SCENE");
-		case HIDEOUT:
-			throw new RuntimeException("No Random Description Available for HIDEOUT");
-		case INFORMANT:
-			return new Pair<String, String>("MALL", "Shopping Mall");
-		case LAST_SEEN:
-			return new Pair<String, String>("LIBRARY", "Public Library");
-		case SUSPECTS:
-			return new Pair<String, String>("POLICE", "Police Station");
-		case WITNESS:
-			return new Pair<String, String>("HOUSE", "House of Mr. McCoy");
-		}
-		return null;
-	}
-
 
 	/**
 	 * Checks if we are on the right track to find the criminal
 	 * @param l
 	 */
 	public void gotoLocation(Location l){
-		LocationChainpiece currentChainPiece = chainPieceStack.peek();
+		LocationChainpiece currentChainPiece = getCurrentChainPiece();
 		// Check if we are tracking back
 		if (l == currentChainPiece.getPreviousLocation()){
 			chainPieceStack.pop();
 		} 
 		// Check if we are on the right track
-		if (l == currentChainPiece.getNextLocation().getLocation()){
-			chainPieceStack.push(chainPieceStack.peek().getNextLocation());
+		if (currentChainPiece.getNextLocation() != null && l == currentChainPiece.getNextLocation().getLocation()){
+			chainPieceStack.push(currentChainPiece.getNextLocation());
 		}
 		
 		doSleuthwork(l);
@@ -255,11 +308,52 @@ public class Mission {
 	}
 	
 	private Map<String, Boolean> sleuthworkDoneMap = new HashMap<String, Boolean>();
-	private boolean isSleuthworkDone(Location location) {
-		return sleuthworkDoneMap.get(location.getId()) != null;
+	private boolean isSleuthworkDone(Location location, LocationChainpiece currentChainPiece) {
+		return sleuthworkDoneMap.get(location.getId()+" for "+currentChainPiece.hashCode()) != null;
 	}
-	private void setSleuthworkDone(Location location) {
-		sleuthworkDoneMap.put(location.getId(), Boolean.TRUE);
+	private void setSleuthworkDone(Location location, LocationChainpiece currentChainPiece) {
+		sleuthworkDoneMap.put(location.getId()+" for "+currentChainPiece.hashCode(), Boolean.TRUE);
+	}
+
+
+	
+	public Location getPreviousLocation(Location from) {
+		LocationChainpiece currentChainPiece = getCurrentChainPiece();
+		// Are we on the right track?
+		if (from == currentChainPiece.getLocation()){ 
+			return currentChainPiece.getPreviousLocation();
+		} else {
+			return currentChainPiece.getLocation();
+		}
+	}
+
+
+	
+	public String getClue() {
+		return getCurrentChainPiece().getNextLocation().getLocation().getAClue();
+	}
+
+	public void addClueForCurrentLocation(String clue) {
+		getCurrentChainPiece().addClue(clue);
+	}
+	
+	public List<String> getClues(){
+		return getCurrentChainPiece().getClues();
+	}
+
+
+	public void criminalKilled() {
+		((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("You have killed "+getCrime().getCriminal().getDescription()+"! Return to the HQ to complete your mission.");
+		if (!getSuspiciousLocations(getCurrentChainPiece().getLocation()).contains(Location.getHQLocation())){
+			addSuspiciousLocation(getCurrentChainPiece().getLocation(), Location.getHQLocation());
+		}
+		criminalKilled = true;
+	}
+	
+	private boolean criminalKilled = false;
+	
+	public boolean isCriminalKilled() {
+		return criminalKilled;
 	}
 	
 }

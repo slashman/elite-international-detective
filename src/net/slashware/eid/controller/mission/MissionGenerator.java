@@ -5,7 +5,7 @@ import java.util.Date;
 
 import net.slashie.serf.text.SimpleEnglishNameGenerator;
 import net.slashie.utils.Util;
-import net.slashware.eid.controller.LocationManager;
+import net.slashware.eid.controller.level.LocationManager;
 import net.slashware.eid.entity.level.Landmark;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.BuildingSubject;
@@ -47,9 +47,10 @@ public class MissionGenerator {
 
 	private static Date defineDeadline(Date missionStart, int difficulty) {
 		int missionDays = MAX_DIFFICULTY * 10 - Util.rand(0, 10) - difficulty * MAX_DIFFICULTY;
+		missionDays = 1;
 		Calendar c = Calendar.getInstance();
 		c.setTime(missionStart);
-		c.add(Calendar.DATE, missionDays);
+		c.add(Calendar.DAY_OF_YEAR, missionDays);
 		return c.getTime();
 	}
 
@@ -104,7 +105,7 @@ public class MissionGenerator {
 	}
 	
 	private static Criminal createCriminal(CrimeType crimeType, int difficulty) {
-		return new Criminal("KORNEL_SANDIEGO","Kornel Sandiego","THOMPSON_M1921","DARK_BLACK_SUIT",120,10,CriminalOrganization.BLACK_KNIGHTS, "Chaos should reign!");
+		return new Criminal("KORNEL_SANDIEGO","Kornel Sandiego",10,CriminalOrganization.BLACK_KNIGHTS);
 	}
 
 	private static CrimeType selectCrimeType(int difficulty) {

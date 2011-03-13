@@ -1,12 +1,15 @@
-package net.slashware.eid.controller;
+package net.slashware.eid.controller.level;
 
+import net.slashie.serf.level.AbstractFeature;
 import net.slashie.serf.level.AbstractLevel;
+import net.slashie.serf.level.FeatureFactory;
 import net.slashie.serf.levelGeneration.StaticGenerator;
 import net.slashie.utils.Position;
 import net.slashware.eid.data.ItemFactory;
 import net.slashware.eid.data.NPCFactory;
 import net.slashware.eid.entity.NPC;
 import net.slashware.eid.entity.item.EIDItem;
+import net.slashware.eid.entity.player.DetectiveActor;
 
 public class EIDStaticGenerator extends StaticGenerator{
 	@Override
@@ -16,6 +19,14 @@ public class EIDStaticGenerator extends StaticGenerator{
 			l.addItem(Position.add(where, new Position(x,y)), item);
 		} else if (cmds[1].equals("NPC")){
 			NPC npc = NPCFactory.createNPC(cmds[2]);
+			npc.setPosition(where.x+x,where.y+y,where.z);
+			l.addActor(npc);
+		}else if (cmds[1].equals("FEATURE")){
+			AbstractFeature feature = FeatureFactory.getFactory().buildFeature(cmds[2]);
+			feature.setPosition(where.x+x,where.y+y,where.z);
+			l.addFeature(feature);
+		}else if (cmds[1].equals("CRIMINAL_LEADER")){
+			NPC npc = NPCFactory.createNPC(((DetectiveActor)l.getPlayer()).getCurrentMission().getCrime().getCriminal().getNPCID());
 			npc.setPosition(where.x+x,where.y+y,where.z);
 			l.addActor(npc);
 		}

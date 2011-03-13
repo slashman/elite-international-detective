@@ -17,6 +17,12 @@ public class CharAppearances {
 			new CharAppearance("DOOR", '/', ConsoleSystemInterface.BROWN),
 			new CharAppearance("BAND", '>', ConsoleSystemInterface.GRAY),
 			
+			new CharAppearance("STREET", ' ', ConsoleSystemInterface.GRAY),
+			new CharAppearance("WALKWAY", '.', ConsoleSystemInterface.GRAY),
+			new CharAppearance("STREET_V_BAR", '|', ConsoleSystemInterface.YELLOW),
+			new CharAppearance("STREET_H_BAR", '-', ConsoleSystemInterface.YELLOW),
+			new CharAppearance("BUILDING_WALL", '#', ConsoleSystemInterface.TEAL),
+			new CharAppearance("BLIND_DOOR", '/', ConsoleSystemInterface.BROWN),
 			 
 			new CharAppearance("BERGMANN_MP18", '/', ConsoleSystemInterface.BROWN),
 			new CharAppearance("THOMPSON_M1921", '/', ConsoleSystemInterface.GRAY),
@@ -35,6 +41,18 @@ public class CharAppearances {
 			new CharAppearance("LALI", '@', ConsoleSystemInterface.RED),
 			new CharAppearance("AIRPORT_LADY", 't', ConsoleSystemInterface.PURPLE),
 			new CharAppearance("AIRPORT_GUY", 't', ConsoleSystemInterface.GREEN),
+			new CharAppearance("INFORMANT", '@', ConsoleSystemInterface.GREEN),
+			new CharAppearance("CRIMINAL", '@', ConsoleSystemInterface.RED),
+			new CharAppearance("SUSPECT", '@', ConsoleSystemInterface.WHITE),
+			new CharAppearance("COP", '@', ConsoleSystemInterface.BLUE),
+			new CharAppearance("LEADER", '@', ConsoleSystemInterface.GRAY),
+			new CharAppearance("WITNESS", 't', ConsoleSystemInterface.PURPLE),
+			new CharAppearance("CIVILIAN", 't', ConsoleSystemInterface.GREEN),
+			
+			new CharAppearance("KORNEL_SANDIEGO", 'K', ConsoleSystemInterface.RED),
+			
+			new CharAppearance("CLUE", '?', ConsoleSystemInterface.WHITE),
+
 		};
 	};
 

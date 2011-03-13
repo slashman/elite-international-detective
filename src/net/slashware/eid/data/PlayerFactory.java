@@ -15,14 +15,12 @@ public class PlayerFactory {
 		ret.setRank(Rank.ROOKIE);
 		ret.setGame(game);
 		ret.setClothing(ItemFactory.createItem("GREEN_RAINCOAT"));
-		//ret.setWeapon(ItemFactory.createItem("BERGMANN_MP18"));
+		ret.setWeapon(ItemFactory.createItem("BERGMANN_MP18"));
 		//ret.setWeapon(ItemFactory.createItem("WINCHESTHER_M12"));
 		ret.addItem(ItemFactory.createItem("DARK_BLUE_SUIT"), 1);
 		ret.addItem(ItemFactory.createItem("REMOTE_COM"), 1);
 		ret.setLuckyPoints(20);
-		ret.setLuckyPointsMax(20);
 		ret.setStamina(100);
-		ret.setStaminaMax(100);
 		return ret;
 	}
 }

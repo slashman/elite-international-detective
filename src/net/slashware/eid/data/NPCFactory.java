@@ -16,7 +16,6 @@ public class NPCFactory {
 		ret.arm();
 		return ret;
 	}
-	
 
 	public static void setNPCs(NPC[] npcs) {
 		for (NPC npc: npcs){

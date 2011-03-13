@@ -11,6 +11,7 @@ import net.slashie.serf.ui.UserInterface;
 import net.slashie.utils.Util;
 import net.slashware.eid.EIDGame;
 import net.slashware.eid.EIDUserInterface;
+import net.slashware.eid.controller.mission.MissionGenerator;
 import net.slashware.eid.entity.EIDActor;
 import net.slashware.eid.entity.item.Ammo;
 import net.slashware.eid.entity.item.EIDItem;
@@ -18,6 +19,7 @@ import net.slashware.eid.entity.item.ItemType;
 import net.slashware.eid.entity.level.EIDLevel;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.mission.Mission;
+import net.slashware.eid.ui.EIDDisplay;
 
 public class DetectiveActor extends Player implements EIDActor {
 	public DetectiveActor() {
@@ -33,9 +35,7 @@ public class DetectiveActor extends Player implements EIDActor {
 	private EIDItem weapon;
 	private EIDItem clothing;
 	private int luckyPoints;
-	private int luckyPointsMax;
 	private int stamina;
-	private int staminaMax;
 	private Lethality lethality;
 	private WalkingMode walkingMode;
 	private Location location;
@@ -44,10 +44,24 @@ public class DetectiveActor extends Player implements EIDActor {
 	@Override
 	public void beforeActing() {
 		super.beforeActing();
-		if (getCurrentMission().getDeadline().before(getCurrentTime())){
-			// Mission failed
-			getLevel().addMessage("Mission Failed!");
+		if (!getCurrentMission().isCriminalKilled() && getCurrentMission().getDeadline().before(getCurrentTime())){
+			if (Util.chance(5)){
+				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("Mission Failed! "+getCurrentMission().getCrime().getCriminal().getDescription()+" strikes back!");
+				((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("We will assign a better International Detective to finish him up. Pull back to HQ for further instructions");
+				Mission nextMission = MissionGenerator.generateMission(((EIDGame)getGame()).getGameTime().getTime(), getRank().getDifficulty(), this);
+				((EIDGame)getGame()).getGameTime().setTime(nextMission.getMissionStart());
+				setCurrentMission(nextMission);
+				EIDDisplay.thus.showMission(this, nextMission);
+				informPlayerEvent(Player.EVT_GOTO_LEVEL, "HQ");
+				UserInterface.getUI().refresh();
+			} else if (Util.chance(60)){
+				getLevel().addMessage("Time is over! Criminal could strike anytime!");
+			}
 		}
+		if (Util.chance(50))
+			recoverLuck();
+		if (Util.chance(70))
+			recoverStamina();
 	}
 	
 	@Override
@@ -71,11 +85,7 @@ public class DetectiveActor extends Player implements EIDActor {
 	}
 
 	public int getLuckyPointsMax() {
-		return luckyPointsMax;
-	}
-
-	public void setLuckyPointsMax(int luckyPointsMax) {
-		this.luckyPointsMax = luckyPointsMax;
+		return getRank().getLuck();
 	}
 
 	@Override
@@ -208,11 +218,7 @@ public class DetectiveActor extends Player implements EIDActor {
 	}
 
 	public int getStaminaMax() {
-		return staminaMax;
-	}
-
-	public void setStaminaMax(int staminaMax) {
-		this.staminaMax = staminaMax;
+		return getRank().getStamina();
 	}
 
 	public WalkingMode getWalkingMode() {
@@ -231,8 +237,14 @@ public class DetectiveActor extends Player implements EIDActor {
 
 	public void recoverStamina() {
 		stamina +=2;
-		if (stamina > staminaMax)
-			stamina = staminaMax;
+		if (stamina > getStaminaMax())
+			stamina = getStaminaMax();
+	}
+	
+	public void recoverLuck() {
+		luckyPoints +=2;
+		if (luckyPoints > getLuckyPointsMax())
+			luckyPoints = getLuckyPointsMax();
 	}
 
 	public boolean isOnHQ() {
@@ -263,7 +275,23 @@ public class DetectiveActor extends Player implements EIDActor {
 		((EIDUserInterface)UserInterface.getUI()).showBlockingMessage("Sleep time.");
 		((EIDGame)getGame()).tilMorrow();
 	}
+
 	
+	public void addClue(String clue) {
+		getCurrentMission().addClueForCurrentLocation(clue);
+	}
 	
-	
+	public Rank getRank() {
+		return rank;
+	}
+
+	private List<Mission> completedMissions = new ArrayList<Mission>();
+	public void addCompletedMission(Mission mission) {
+		completedMissions.add(mission);
+		int completedMissionQuantity = completedMissions.size();
+		setRank(Rank.getRankForCompletedMissions(completedMissionQuantity));
+		
+	}
+
+
 }

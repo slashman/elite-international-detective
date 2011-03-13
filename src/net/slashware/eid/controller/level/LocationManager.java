@@ -1,4 +1,4 @@
-package net.slashware.eid.controller;
+package net.slashware.eid.controller.level;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,6 +8,7 @@ import java.util.Map;
 import net.slashie.serf.level.LevelMetaData;
 import net.slashie.utils.Util;
 import net.slashware.eid.entity.level.Location;
+import net.slashware.eid.entity.mission.CityLocation;
 import net.slashware.eid.entity.player.DetectiveActor;
 
 public class LocationManager {
@@ -27,13 +28,15 @@ public class LocationManager {
 		return locationsMap.get(locationId);
 	}
 
-	private static Map<String, LevelMetaData> levelMetaDataMap = new HashMap<String, LevelMetaData>(); 
-	public static void setLevelMetadata(String levelCode, DetectiveActor player) {
-		LevelMetaData ret = levelMetaDataMap.get(levelCode);
+	private static Map<String, UrbanLevelMetadata> levelMetaDataMap = new HashMap<String, UrbanLevelMetadata>(); 
+	
+	public static void setLevelMetadata(CityLocation location, DetectiveActor player) {
+		UrbanLevelMetadata ret = levelMetaDataMap.get(location.getLevelCode());
 		if (ret == null){
-			ret = new LevelMetaData(levelCode);
-			levelMetaDataMap.put(levelCode, ret);
-			player.getGame().addMetaData(levelCode, ret);
+			ret = new UrbanLevelMetadata(location.getLevelCode());
+			ret.setTarget(location);
+			levelMetaDataMap.put(location.getLevelCode(), ret);
+			player.getGame().addMetaData(location.getLevelCode(), ret);
 		}
 	}
 	
