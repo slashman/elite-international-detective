@@ -23,8 +23,6 @@ import net.slashware.eid.entity.level.Country;
 import net.slashware.eid.entity.level.Landmark;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.level.SimpleLevelCell;
-import net.slashware.eid.entity.mission.Criminal;
-import net.slashware.eid.entity.mission.CriminalOrganization;
 
 public class EIDData {
 	public static AbstractCell[] getCellDefinitions (){
@@ -49,9 +47,44 @@ public class EIDData {
 	
 	public static EIDItem[] getItemDefinitions(){
 		return new EIDItem[]{
-			new Weapon("BERGMANN_MP18", "Bergmann MP18", new Roll(2,4), 5, 3, 5, "MACHINE_GUN","wav/Gun_Shot2.wav"),
-			new Weapon("THOMPSON_M1921", "Thompson M1921", new Roll(3,6), 5, 3, 6, "MACHINE_GUN","wav/Gun_Shot2.wav"),
-			new Weapon("WINCHESTHER_M12", "Winchester M12", new Roll(3,7), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			// SMGs
+			new Weapon(4, "BERGMANN_MP18", "Bergmann MP18", new Roll(1,2), 5, 3, 5, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(6, "THOMPSON_M1921", "Thompson M1921", new Roll(2,3), 6, 3, 6, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(7, "MP38", "MP38", new Roll(3,4), 6, 3, 6, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(8,"MP40", "MP40", new Roll(3,5), 7, 3, 6, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(9, "Mauser M32", "Mauser M32", new Roll(4,5), 8, 3, 6, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+
+			// Pistols
+			new Weapon(1, "Mauser C-96", "Mauser C-96", new Roll(1,2), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(1, "Kolibri", "Kolibri", new Roll(1,3), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(2, "FN Browning M1900", "FN Browning M1900", new Roll(2,3), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(2, "Remington Double Derringer", "Remington Double Derringer", new Roll(2,4), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(3, "Astra M1921", "Astra M1921", new Roll(3,4), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(3, "Walther P38", "Walther P38", new Roll(3,5), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(4, "P08 Luger", "P08 Luger", new Roll(4,5), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(4, "Walther PP", "Walther PP", new Roll(4,6), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(5, "Browning Hi-Power", "Browning Hi-Power", new Roll(5,6), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(6, "Cloth M1911 pistol", "Colt M1911 pistol", new Roll(5,7), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(7, "Colt Peacemaker", "Colt Peacemaker", new Roll(6,7), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(8, "Colt Detective Special", "Colt Detective Special", new Roll(7,8), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			new Weapon(9, "Smith and Weason M10", "Smith and Weason M10", new Roll(8,9), 10, 1, 1, "MACHINE_GUN","wav/Gun_Shot2.wav"),
+			
+			// Rifles
+			/*Meiji 38 Arisaka
+			Mauser Kar 98
+			Garand 30-06
+			Lee Enfield
+			Winchester M1873
+			Winchester 94*/
+			
+			// Shotguns
+			new Weapon(5, "Browning Auto 5", "Browning Auto 5", new Roll(3,3), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			new Weapon(6, "Savage 311-R", "Savage 311-R", new Roll(4,4), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			new Weapon(7, "Winchester M1897", "Winchester M1897", new Roll(5,5), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			new Weapon(8, "Winchester M1901", "Winchester M1901", new Roll(6,6), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			new Weapon(9, "WINCHESTHER_M12", "Winchester M12", new Roll(7,7), 5, 3, 1, "SHOTGUN","wav/Shotgun1.wav"),
+			
+			
 			new Clothing("GREEN_RAINCOAT", "Cheap Green Raincoat",  new Roll(1,1), 3, 1),
 			new Clothing("BLACK_RAINCOAT", "Black Raincoat",  new Roll(1,1), 3, 1),
 			new Clothing("DARK_BLUE_SUIT", "Dark Blue Suit",  new Roll(1,1), 2, 3),
@@ -83,12 +116,15 @@ public class EIDData {
 			new NPC("SUSPECT","Suspect",false,NULL,null,null,5,". . ."),
 			new NPC("WITNESS","Witness",false,NULL,null,null,5,"Please, protect me!"),
 			new NPC("COP","Cop",false,simpleWalk,"WINCHESTHER_M12", "BLACK_RAINCOAT",20,"To protect and serve!"),
-			new NPC("CRIMINAL","Criminal",false,simpleEnemy,"WINCHESTHER_M12", "BLACK_RAINCOAT",40,"Die!"),
+			new NPC("CRIMINAL","Criminal",false,simpleEnemy,null, "BLACK_RAINCOAT",40,"Die!"),
 			new NPC("LEADER","Criminal Leader",false,simpleEnemy,"THOMPSON_M1921", "DARK_BLACK_SUIT",80,"Die!"),
 			new NPC("CIVILIAN","Civilian",false,simpleWalk,null,null,5,"Hello, Sir."),
 			
 			// Criminals
-			new NPC("KORNEL_SANDIEGO","Kornel Sandiego",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",2,"Chaos should reign!")
+			new NPC("KORNEL_SANDIEGO","Kornel Sandiego",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",120,"Chaos should reign!"),
+			new NPC("Ethan Black","Ethan Black",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",120,"Chaos should reign!"),
+			new NPC("Adrianeth Avil","Adrianeth Avil",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",120,"Chaos should reign!"),
+			new NPC("Slash","Slash",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",120,"Chaos should reign!")
 			
 		};
 	}
