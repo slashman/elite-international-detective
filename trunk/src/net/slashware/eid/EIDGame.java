@@ -36,7 +36,7 @@ public class EIDGame extends SworeGame{
 
 	@Override
 	public String getFirstMessage(Actor player) {
-		return "Welcome, "+player.getDescription()+", press F1 or ? for help";
+		return "Welcome, "+player.getDescription();
 	}
 	
 	public static String getVersion(){
