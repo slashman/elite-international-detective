@@ -1,20 +1,18 @@
 package net.slashware.eid.action;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import net.slashie.serf.action.Action;
 import net.slashie.serf.action.Actor;
 import net.slashie.serf.game.Player;
 import net.slashie.serf.ui.UserInterface;
+
 import net.slashware.eid.EIDGame;
-import net.slashware.eid.EIDUserInterface;
 import net.slashware.eid.controller.level.LocationManager;
 import net.slashware.eid.entity.level.Location;
 import net.slashware.eid.entity.level.UrbanLevel;
 import net.slashware.eid.entity.mission.CityLocation;
 import net.slashware.eid.entity.player.DetectiveActor;
-import net.slashware.eid.ui.EIDDisplay;
 
 public class CallTransport extends Action{
 
@@ -22,7 +20,7 @@ public class CallTransport extends Action{
 	public void execute() {
 		DetectiveActor player = (DetectiveActor) performer;
 		if (player.isOnHQ()){
-			// Go to airport
+			// TODO: Shouldn't need to go to the airport if we are investigating in the HQ hometown.
 			if (UserInterface.getUI().promptChat("Go to the airport? Y/N")){
 				player.informPlayerEvent(Player.EVT_GOTO_LEVEL, "AIRPORT");
 				((EIDGame)player.getGame()).elapseHours(1);
@@ -31,13 +29,6 @@ public class CallTransport extends Action{
 			// Player may be at the airport or at an urban area
 			List<CityLocation> destinations =  player.getCurrentMission().getSuspiciousPlaces(player.getLocation());
 			if (destinations == null){
-				if (player.getLocation().equals(Location.getHQLocation())){
-					if (UserInterface.getUI().promptChat("Go to the HQ? Y/N")){
-						player.informPlayerEvent(Player.EVT_GOTO_LEVEL, "HQ");
-						((EIDGame)player.getGame()).elapseHours(1);
-						return;
-					}
-				}
 				if (UserInterface.getUI().promptChat("You do not know where to go. Will you engage into sleuthwork now? Y/N")){
 					player.getCurrentMission().doSleuthwork(player.getLocation());
 				}
