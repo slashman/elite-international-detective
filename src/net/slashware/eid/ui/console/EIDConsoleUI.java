@@ -345,8 +345,8 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			csi.print(40,10, destination.getFullCityName(), ConsoleSystemInterface.WHITE);
 
 			
-			printTextBox(destination.getHistory(), 2, 11, 35, 10, CSIColor.BLACK);
-			printTextBox(destination.getDescription(), 38, 11, 35, 10, CSIColor.BLACK);
+			printTextBox(destination.getHistory(), 2, 11, 35, 13, CSIColor.BLACK);
+			printTextBox(destination.getDescription(), 38, 11, 35, 13, CSIColor.BLACK);
 
 			csi.refresh();
 			csi.waitKey(CharKey.SPACE);
