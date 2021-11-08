@@ -90,8 +90,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(49, 1, detective.getDescription());
 		csi.print(49, 2, (detective.getWeapon()!= null? detective.getWeapon().getDescription():"No Weapon"));
 		csi.print(49, 3, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
-		csi.print(49, 5, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
-		csi.print(49, 6, "Lethality: "+detective.getLethality().getDescription());
+		csi.print(49, 6, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
 		csi.print(49, 7, "Movement: "+detective.getWalkingMode().getDescription());
 		csi.print(49, 8, "Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
 		csi.print(3, 0, "   ~~ "+detective.getCurrentMission().getCrime().getTitle()+" ~~   ", CSIColor.RED);

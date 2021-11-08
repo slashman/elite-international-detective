@@ -300,7 +300,6 @@ public class RunGame {
 		Action grabAction = new Grab();
 		Action useAction = new Use();
 		Action fireAction = new Fire();
-		Action changeLethality = new ChangeLethality();
 		Action runAction = new Run();
 		Action moveAction = new CallTransport();
 		Action flyAction = new Fly();
@@ -338,7 +337,6 @@ public class RunGame {
 		UserAction[] userActions = new UserAction[] {
 			new UserAction(grabAction, i(readKeyString(keyConfig, "grab"))),
 			new UserAction(useAction, i(readKeyString(keyConfig, "use"))),
-			new UserAction(changeLethality, i(readKeyString(keyConfig, "changeLethality"))),
 			new UserAction(runAction, i(readKeyString(keyConfig, "run"))),
 			new UserAction(moveAction, i(readKeyString(keyConfig, "move"))),
 			new UserAction(flyAction, i(readKeyString(keyConfig, "fly"))),
