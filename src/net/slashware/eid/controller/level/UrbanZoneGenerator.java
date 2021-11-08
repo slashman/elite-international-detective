@@ -119,7 +119,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		}
 		BSPRoom borderRoom = (BSPRoom) Util.randomElementOf(borderRooms);
 		charBuffer[borderRoom.getYpos()][borderRoom.getXpos()] = 'S';
-		ret.setStart(new Position(borderRoom.getXpos(),borderRoom.getYpos()+borderRoom.getHeight()-1));
+		ret.setStart(new Position(borderRoom.getXpos(),borderRoom.getYpos()));
 		
 		// Render the map
 		
