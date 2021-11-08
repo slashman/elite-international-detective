@@ -58,7 +58,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		){
 		UrbanLevel ret = new UrbanLevel();
 		ret.setDispatcher(new Dispatcher());
-		List<BSPRoom> rooms = BSPMapGenerator.generateBSPMap(width, height, 100);
+		List<BSPRoom> rooms = BSPMapGenerator.generateBSPMap(width, height, 10, 60);
 		char[][] charBuffer = new char[height][width];
 		for (BSPRoom room: rooms){
 			drawBlock(charBuffer, room);
