@@ -76,7 +76,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		ret.setTarget(new Position(cityLocationRoom.getXpos()+(int)Math.round(cityLocationRoom.getWidth()/2.0d), cityLocationRoom.getYpos()+(int)Math.round(cityLocationRoom.getHeight()/2.0d)));
 		
 		// Add civilians
-		int civilians = Util.rand(50, 100);
+		int civilians = Util.rand(10, 20);
 		for (int i = 0; i < civilians; i++){
 			int x = Util.rand(5, width - 5);
 			int y = Util.rand(5, height - 5);
@@ -87,7 +87,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 			charBuffer[y][x] = 'v';
 		}
 		
-		int criminals = Util.rand(20, 30);
+		int criminals = Util.rand(4, 6);
 		for (int i = 0; i < criminals; i++){
 			int x = Util.rand(5, width - 5);
 			int y = Util.rand(5, height - 5);
@@ -98,7 +98,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 			charBuffer[y][x] = 'C';
 		}
 		
-		int items = Util.rand(5, 10);
+		int items = Util.rand(1, 2);
 		for (int i = 0; i < items; i++){
 			int x = Util.rand(5, width - 5);
 			int y = Util.rand(5, height - 5);
