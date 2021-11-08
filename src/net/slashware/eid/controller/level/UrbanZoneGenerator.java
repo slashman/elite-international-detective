@@ -62,7 +62,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		char[][] charBuffer = new char[height][width];
 		for (BSPRoom room: rooms){
 			drawBlock(charBuffer, room);
-			cityLocation.drawBlock(charBuffer, room); // TEST
+			// cityLocation.drawBlock(charBuffer, room); // TEST
 		}
 		
 		// Pick one of the rooms for the cityLocation (Target), use the right border
