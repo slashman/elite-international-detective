@@ -163,10 +163,7 @@ public class RunGame {
     		    } else {
     		    	System.out.println("Initializing Midi Sequencer");
     	    		try {
-    	    			STMidiPlayer.sequencer = MidiSystem.getSequencer ();
-    	    			//STMidiPlayer.setVolume(0.1d);
-    	    			STMidiPlayer.sequencer.open();
-    	    			
+    	    			STMidiPlayer.initializeSequencer();
     	    		} catch(MidiUnavailableException mue) {
     	            	SworeGame.addReport("Midi device unavailable");
     	            	System.out.println("Midi Device Unavailable");
@@ -344,13 +341,13 @@ public class RunGame {
 		};
 		
 		UserCommand[] userCommands = new UserCommand[]{
-			new UserCommand(CommandListener.PROMPTQUIT, i(keyBindings.getProperty("QUIT_KEY"))),
-			new UserCommand(CommandListener.HELP, i(keyBindings.getProperty("HELP1_KEY"))),
-			new UserCommand(CommandListener.LOOK, i(keyBindings.getProperty("LOOK_KEY"))),
-			new UserCommand(CommandListener.PROMPTSAVE, i(keyBindings.getProperty("PROMPT_SAVE_KEY"))),
-			new UserCommand(CommandListener.HELP, i(keyBindings.getProperty("HELP2_KEY"))),
-			new UserCommand(CommandListener.SHOWINVEN, i(keyBindings.getProperty("SHOW_INVENTORY_KEY"))),
-			new UserCommand(CommandListener.SWITCHMUSIC, i(keyBindings.getProperty("SWITCH_MUSIC_KEY"))),
+			new UserCommand(CommandListener.Command.PROMPTQUIT, i(keyBindings.getProperty("QUIT_KEY"))),
+			new UserCommand(CommandListener.Command.HELP, i(keyBindings.getProperty("HELP1_KEY"))),
+			new UserCommand(CommandListener.Command.LOOK, i(keyBindings.getProperty("LOOK_KEY"))),
+			new UserCommand(CommandListener.Command.PROMPTSAVE, i(keyBindings.getProperty("PROMPT_SAVE_KEY"))),
+			new UserCommand(CommandListener.Command.HELP, i(keyBindings.getProperty("HELP2_KEY"))),
+			new UserCommand(CommandListener.Command.SHOWINVEN, i(keyBindings.getProperty("SHOW_INVENTORY_KEY"))),
+			new UserCommand(CommandListener.Command.SWITCHMUSIC, i(keyBindings.getProperty("SWITCH_MUSIC_KEY"))),
 		};
 		
 		switch (mode){
