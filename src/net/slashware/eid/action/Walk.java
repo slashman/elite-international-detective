@@ -3,6 +3,7 @@ package net.slashware.eid.action;
 import net.slashie.serf.action.Action;
 import net.slashie.serf.action.Actor;
 import net.slashie.serf.action.AwareActor;
+import net.slashie.serf.level.AbstractFeature;
 import net.slashie.serf.ui.ActionCancelException;
 import net.slashie.utils.Position;
 import net.slashware.eid.entity.level.SimpleLevelCell;
@@ -61,7 +62,7 @@ public class Walk extends Action{
         Position destinationPoint = Position.add(performer.getPosition(), var);
         
         Actor actor = performer.getLevel().getActorAt(destinationPoint);
-		if (actor != null){
+		if (actor != null && !(actor instanceof AbstractFeature)){
 			if (performer == performer.getLevel().getPlayer()){
 				actor.onPlayerBump();
 				actionCancelled = true;

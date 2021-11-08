@@ -124,7 +124,12 @@ public class DetectiveActor extends Player implements EIDActor {
 	}
 
 	@Override
-	public int getSightRange() {
+	public int getSightRangeInCells() {
+		return 5;
+	}
+	
+	@Override
+	public int getSightRangeInDots() {
 		return 5;
 	}
 

@@ -88,7 +88,12 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 	}
 
 	@Override
-	public int getSightRange() {
+	public int getSightRangeInCells() {
+		return 5;
+	}
+	
+	@Override
+	public int getSightRangeInDots() {
 		return 5;
 	}
 	
