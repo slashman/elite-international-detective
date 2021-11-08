@@ -405,41 +405,21 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		
 		@Override
 		public void showLevelMap(UrbanLevel level) {
-			int mx = 27, my = 0;
-			char[][] charMap = level.getCharMap();
 			csi.cls();
-			// Levels are 100 x 100, scale them to 25 x 25
-			//char[][] scaledMap = new char[20][20];
-			for (int xgroup = 0; xgroup < 24; xgroup++){
-				for (int ygroup = 0; ygroup < 24; ygroup++){
-					int streets = countStreets(charMap, xgroup, ygroup, 4);
-					if (streets > 0){
-						csi.print(mx+xgroup, my+ygroup, '.', ConsoleSystemInterface.GRAY);
-					} else {
-						csi.print(mx+xgroup, my+ygroup, '#', ConsoleSystemInterface.TEAL);
-					}
+			for (int x = 0; x < level.getWidth(); x++){
+				for (int y = 0; y < level.getHeight(); y++){
+					CharAppearance app = (CharAppearance) level.getMapCell(x, y, 0).getAppearance();
+					csi.print(x, y, app.getChar(), app.getColor());
 				}
 			}
 			
 			Position start = level.getStart();
 			Position target = level.getTarget();
-			csi.print(mx+(int)Math.floor((double)start.x/4.0d), my+(int)Math.floor((double)start.y/4.0d), ">", ConsoleSystemInterface.RED);
-			csi.print(mx+(int)Math.floor((double)target.x/4.0d), my+(int)Math.floor((double)target.y/4.0d), "<", ConsoleSystemInterface.RED);
-			
+			csi.print(start.x, start.y, ">", ConsoleSystemInterface.RED);
+			csi.print(target.x, target.y, "<", ConsoleSystemInterface.RED);
 			csi.refresh();
 			csi.waitKey(CharKey.SPACE);
 		}
-
-		private int countStreets(char[][] charMap, int xgroup, int ygroup, int i) {
-			int count = 0;
-			for (int x = xgroup * i; x < xgroup*i + i; x++)
-				for (int y = ygroup * i; y < ygroup*i + i; y++)
-					if (charMap[y][x] == '.'){
-						count++;
-					}
-			return count;
-		}
-		
 	};
 
 	public EIDDisplay getConsoleDisplay() {
