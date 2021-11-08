@@ -386,7 +386,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 			csi.print(10, 6, "a. login into InterSleuth Servers", ConsoleSystemInterface.WHITE);
 			csi.print(10, 7, "b. exit", ConsoleSystemInterface.WHITE);
 			
-			csi.print(8,19, "Version "+EIDGame.getVersion()+", Developed by Slashware Interactive 2011", ConsoleSystemInterface.RED);
+			csi.print(8,19, "Version "+EIDGame.getVersion()+" by @slashie. 2011, 2021", ConsoleSystemInterface.RED);
 			csi.refresh();
 	    	STMusicManagerNew.thus.playKey("TITLE");
 	    	CharKey x = new CharKey(CharKey.NONE);

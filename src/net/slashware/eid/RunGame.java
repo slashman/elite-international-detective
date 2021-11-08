@@ -76,7 +76,7 @@ public class RunGame {
 	private static void init(){
 		if (createNew){
 			System.out.println("Elite International Detective "+EIDGame.getVersion());
-			System.out.println("Slashware Interactive ~ 2011");
+			System.out.println("by Slashie ~ 2011, 2021");
 			System.out.println("Powered By Serf "+SworeGame.getVersion());
 			System.out.println("Reading configuration");
 	    	readConfiguration();
