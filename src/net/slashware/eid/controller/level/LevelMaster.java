@@ -21,7 +21,7 @@ public class LevelMaster {
 			UrbanLevelMetadata ulm = (UrbanLevelMetadata) levelMetaData;
 			int difficulty = ((DetectiveActor)p).getCurrentMission().getDifficulty();
 			ret = urbanZoneGenerator.generateUrbanZone(
-					ulm.getTarget(), 100, 100, 5, 0, (DetectiveActor)p, difficulty);
+					ulm.getTarget(), 80, 25, 5, 0, (DetectiveActor)p, difficulty);
 			ret.setDescription("Near "+ulm.getTarget().getName());
 			ret.setMusicKey("R"+Util.rand(0, 4));
 			ret.setID(levelMetaData.getLevelID());
