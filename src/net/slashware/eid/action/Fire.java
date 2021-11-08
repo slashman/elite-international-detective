@@ -72,6 +72,7 @@ public class Fire extends Action {
 		// Determine shoot depth
 		int i = 0;
 		Line path = new Line(performer.getPosition(), targetPosition);
+		path.next();
 		for (i=0; i<20; i++){
 			Position destinationPoint = path.next();
 			AbstractCell destinationCell = aLevel.getMapCell(destinationPoint);
@@ -89,6 +90,7 @@ public class Fire extends Action {
 				
 		boolean hitsSomebody = false;
 		path = new Line(performer.getPosition(), targetPosition);
+		path.next();
 		for (i=0; i<20; i++){
 			Position destinationPoint = path.next();
         	List<AbstractFeature> destinationFeature = aLevel.getFeaturesAt(destinationPoint);
