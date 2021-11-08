@@ -123,7 +123,7 @@ public class UrbanZoneGenerator extends EIDStaticGenerator {
 		
 		// Render the map
 		
-		String[] stringMap = new String[charBuffer[0].length];
+		String[] stringMap = new String[charBuffer.length];
 		int i = 0;
 		for (char[] charLine: charBuffer){
 			stringMap[i] = new String(charLine);
