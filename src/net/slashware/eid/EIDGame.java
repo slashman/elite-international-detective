@@ -90,6 +90,9 @@ public class EIDGame extends SworeGame{
 		EIDLevel level = (EIDLevel) aLevel;
 		if (level.getMusicKey() != null)
 			STMusicManagerNew.thus.playKey(level.getMusicKey());
+		if (level instanceof UrbanLevel){
+			EIDDisplay.thus.showLevelMap(((UrbanLevel)aLevel));
+		}
 	}
 	
 	@Override
