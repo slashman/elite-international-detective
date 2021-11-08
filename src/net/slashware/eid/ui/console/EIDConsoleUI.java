@@ -88,8 +88,15 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		// Box 1
 		Calendar gameTime = ((EIDGame)player.getGame()).getGameTime(); 
 		csi.print(49, 1, detective.getDescription());
-		csi.print(49, 2, (detective.getWeapon()!= null? detective.getWeapon().getDescription():"No Weapon"));
-		csi.print(49, 3, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
+		EIDItem weapon = detective.getWeapon();
+		if (weapon == null) {
+			csi.print(49, 2, "No Weapon");
+		} else {
+			csi.print(49, 2, weapon.getDescription());
+			String shotsString = weapon.getShoots() > 1 ? weapon.getShoots() + " shots/round" : "single shot";
+			csi.print(49, 3, weapon.getAttack().getString() + " Damage, " + shotsString + ".");	
+		}
+		csi.print(49, 4, (detective.getClothing()!= null? detective.getClothing().getDescription():"No Clothing (!)"));
 		csi.print(49, 6, "Heroic Luck: "+detective.getLuckyPoints()+"/"+detective.getLuckyPointsMax());
 		csi.print(49, 7, "Movement: "+detective.getWalkingMode().getDescription());
 		csi.print(49, 8, "Stamina: "+detective.getStamina()+"/"+detective.getStaminaMax());
