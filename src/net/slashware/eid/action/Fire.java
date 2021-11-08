@@ -4,6 +4,7 @@ import java.util.List;
 
 import net.slashie.serf.action.Action;
 import net.slashie.serf.action.Actor;
+import net.slashie.serf.game.Player;
 import net.slashie.serf.level.AbstractCell;
 import net.slashie.serf.level.AbstractFeature;
 import net.slashie.serf.level.AbstractLevel;
@@ -107,6 +108,8 @@ public class Fire extends Action {
 				if (attack < 1)
 					attack = 1;
 				targetMonster.damageWithWeapon(attack);
+				if (performer instanceof Player)
+					((Player)performer).setCurrentEnemy((Actor) targetMonster);
 			}
 			
 			SimpleLevelCell targetMapCell = (SimpleLevelCell) aLevel.getMapCell(destinationPoint);
