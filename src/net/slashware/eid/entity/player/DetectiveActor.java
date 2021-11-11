@@ -188,7 +188,7 @@ public class DetectiveActor extends Player implements EIDActor {
 		};
 
 	@Override
-	public void damageWithWeapon(int attack) {
+	public void damageWithWeapon(EIDActor damager, int attack) {
 		luckyPoints -= attack;
 		if (luckyPoints < 0){
 			luckyPoints = 0;

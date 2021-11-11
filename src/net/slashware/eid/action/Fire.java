@@ -107,7 +107,7 @@ public class Fire extends Action {
 				int attack = player.getWeapon().getAttack().roll();
 				if (attack < 1)
 					attack = 1;
-				targetMonster.damageWithWeapon(attack);
+				targetMonster.damageWithWeapon((EIDActor) performer, attack);
 				if (performer instanceof Player)
 					((Player)performer).setCurrentEnemy((Actor) targetMonster);
 			}

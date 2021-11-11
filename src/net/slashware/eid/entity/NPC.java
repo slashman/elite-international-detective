@@ -184,7 +184,7 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 			"leg is severed"
 		};
 		
-	public void damageWithWeapon(int attack) {
+	public void damageWithWeapon(EIDActor damager, int attack) {
 		if (wannaDie())
 			return;	
 		luckyPoints -= attack;
@@ -202,7 +202,9 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 				die();
 			}
 		}
-		setHostile(true);
+		if (damager instanceof DetectiveActor){
+			setHostile(true);
+		}
 		
 	}
 
