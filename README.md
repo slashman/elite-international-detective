@@ -11,8 +11,10 @@ Travel all around the world pursuing international criminals, bring the wrath of
 ![Screenshot of the game showing a detective in a gunfight with a criminal](project/day7-2.png)
 
 
-== Development ==
+# Development
+
 Requires `serf-engine` and `libjcsi` as dependencies. Future gradle support is planned.
 
-== Packaging ==
+# Packaging
+
 Export your jar into `distro` including the compiled contents of `src`. Make sure to use `META-INF/MANIFEST.MF`.
