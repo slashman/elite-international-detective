@@ -138,8 +138,8 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(0,  7, "|                                              |                               |", addornmentColor);
 		csi.print(0,  8, "|                                              |                               |", addornmentColor);
 		csi.print(0,  9, "|                                              |                               |", addornmentColor);
-		csi.print(0, 10, "|                                              |[m]ove  [g]rab  [z] walk speed |", addornmentColor);
-		csi.print(0, 11, "|                                              |[f]ly   [u]se   [ ] fire       |", addornmentColor);
+		csi.print(0, 10, "|                                              |[m]ove  [g]rab  [r] run/walk   |", addornmentColor);
+		csi.print(0, 11, "|                                              |[f]ly   [u]se   [Space] fire   |", addornmentColor);
 		csi.print(0, 12, "|                                              >===============================<", addornmentColor);
 		csi.print(0, 13, "|                                              |                               |", addornmentColor);
 		csi.print(0, 14, "|                                              |                               |", addornmentColor);
@@ -152,7 +152,7 @@ public class EIDConsoleUI extends ConsoleUserInterface implements EIDUserInterfa
 		csi.print(0, 21, "|                                              |                               |", addornmentColor);
 		csi.print(0, 22, "|                                              |                               |", addornmentColor);
 		csi.print(0, 23, "|                                              |                               |", addornmentColor);
-		csi.print(0, 24, "\\= ELITE INTERNATIONAL DETECTIVE ==============^==Slashware Interactive 2011===/", addornmentColor);
+		csi.print(0, 24, "\\= ELITE INTERNATIONAL DETECTIVE ==============^===============================/", addornmentColor);
 
 		 
 	}

@@ -1,8 +1,7 @@
 package net.slashware.eid.entity.player;
 
 public enum WalkingMode {
-	WALKING_COOL ("Relaxed Step", 0, 100),
-	WALKING_FAST ("Walking Fast", 2, 80),
+	WALKING_COOL ("Walking", 0, 100),
 	RUNNING("Running",10,25);
 	
 	private String description;
@@ -32,8 +31,6 @@ public enum WalkingMode {
 		case RUNNING:
 			return WALKING_COOL;
 		case WALKING_COOL:
-			return WALKING_FAST;
-		case WALKING_FAST:
 			return RUNNING;
 		}
 		return null;
