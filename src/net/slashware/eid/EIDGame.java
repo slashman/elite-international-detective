@@ -40,7 +40,7 @@ public class EIDGame extends SworeGame{
 	}
 	
 	public static String getVersion(){
-		return "2021.1";
+		return "2021.2";
 	}
 
 	@Override
