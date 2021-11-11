@@ -3,6 +3,7 @@ package net.slashware.eid.action;
 import net.slashie.serf.action.Action;
 import net.slashware.eid.entity.player.DetectiveActor;
 
+//TODO: Transform into a Command when SERF implements the Command pattern (same as action but doesn't consume turns) 
 public class Run extends Action{
 
 	@Override
@@ -12,7 +13,7 @@ public class Run extends Action{
 	
 	@Override
 	public int getCost() {
-		return 0;
+		return 50;
 	}
 
 	@Override
