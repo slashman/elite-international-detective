@@ -89,6 +89,7 @@ public class RunGame {
 					break;
 				case JCURSES_CONSOLE:
 				case SWING_CONSOLE:
+					System.out.println("Powered By libjcsi " + ConsoleSystemInterface.getVersion());
 					System.out.println("Initializing Char Appearances");
 					initializeCAppearances();
 					break;
