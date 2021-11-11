@@ -118,7 +118,7 @@ public class EIDData {
 			new NPC("COP","Cop",false,simpleWalk,"WINCHESTHER_M12", "BLACK_RAINCOAT",20,"To protect and serve!"),
 			new NPC("CRIMINAL","Criminal",false,simpleEnemy,null, "BLACK_RAINCOAT",40,"Die!"),
 			new NPC("LEADER","Criminal Leader",false,simpleEnemy,"THOMPSON_M1921", "DARK_BLACK_SUIT",80,"Die!"),
-			new NPC("CIVILIAN","Civilian",false,simpleWalk,null,null,5,"Hello, Sir."),
+			new NPC("CIVILIAN","Civilian",false,simpleWalk,"Mauser C-96",null,5,"Hello, Sir."),
 			
 			// Criminals
 			new NPC("KORNEL_SANDIEGO","Kornel Sandiego",true,simpleEnemy,"WINCHESTHER_M12","DARK_BLACK_SUIT",120,"Chaos should reign!"),
