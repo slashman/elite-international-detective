@@ -60,7 +60,7 @@ public class Fire extends Action {
 		for (int i = 0; i < player.getWeapon().getShoots(); i++){
 			shoot();
 			try {
-				Thread.sleep(50);
+				Thread.sleep(70);
 			} catch (InterruptedException e) {
 
 			}
