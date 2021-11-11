@@ -181,7 +181,7 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 			return;	
 		luckyPoints -= attack;
 		if (luckyPoints > 0) {
-			getLevel().addMessage("Luck -" + attack, getPosition());
+			getLevel().addMessage("-" + attack, getPosition());
 		} else {
 			getLevel().addMessage(uniDesc()+" "+Util.randomElementOf(HIT_MESSAGES), getPosition());
 			((EIDLevel)getLevel()).addBlood(getPosition());

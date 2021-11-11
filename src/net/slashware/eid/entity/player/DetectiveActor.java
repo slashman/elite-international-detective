@@ -187,7 +187,7 @@ public class DetectiveActor extends Player implements EIDActor {
 			luckyPoints = 0;
 		}
 		if (luckyPoints > 0) {
-			getLevel().addMessage("Luck -" + attack, getPosition());
+			getLevel().addMessage("-" + attack, getPosition());
 		} else {
 			getLevel().addMessage(Util.randomElementOf(HIT_MESSAGES), getPosition());
 			((EIDLevel)getLevel()).addBlood(getPosition());
