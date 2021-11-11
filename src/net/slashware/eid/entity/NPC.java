@@ -169,14 +169,6 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 		return typeId;
 	}
 
-
-	private String [] MISS_MESSAGES= new String []{
-			"is almost hit!",
-			"almost dodges the bullet!",
-			"leaps thru the hit!",
-			
-		};
-		
 	private String [] HIT_MESSAGES= new String []{
 			"is hit right in his chest",
 			"is bathed in his own blood!",
@@ -189,7 +181,7 @@ public class NPC extends AwareActor implements Cloneable, EIDActor{
 			return;	
 		luckyPoints -= attack;
 		if (luckyPoints > 0) {
-			getLevel().addMessage(uniDesc()+" "+Util.randomElementOf(MISS_MESSAGES), getPosition());
+			getLevel().addMessage("Luck -" + attack, getPosition());
 		} else {
 			getLevel().addMessage(uniDesc()+" "+Util.randomElementOf(HIT_MESSAGES), getPosition());
 			((EIDLevel)getLevel()).addBlood(getPosition());

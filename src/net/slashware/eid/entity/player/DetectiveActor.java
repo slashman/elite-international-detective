@@ -173,13 +173,6 @@ public class DetectiveActor extends Player implements EIDActor {
 		this.clothing = clothing;
 	}
 	
-	private String [] MISS_MESSAGES= new String []{
-		"You are almost hit!",
-		"The bullet passes near you!",
-		"The bullet hits just behind you!",
-		"You can hear the bullet fly pass your ears!"
-	};
-	
 	private String [] HIT_MESSAGES= new String []{
 			"Your are hit right in your chest",
 			"You are bathed in your own blood!",
@@ -194,7 +187,7 @@ public class DetectiveActor extends Player implements EIDActor {
 			luckyPoints = 0;
 		}
 		if (luckyPoints > 0) {
-			getLevel().addMessage(Util.randomElementOf(MISS_MESSAGES), getPosition());
+			getLevel().addMessage("Luck -" + attack, getPosition());
 		} else {
 			getLevel().addMessage(Util.randomElementOf(HIT_MESSAGES), getPosition());
 			((EIDLevel)getLevel()).addBlood(getPosition());
